@@ -25,19 +25,19 @@ const hexToRgb = (input: string) => {
 	let rbg = `${input}`
 	rbg = rbg.replace('#', '')
 	const hexRegex = /[0-9A-Fa-f]/g
-	if (!hexRegex.test(input) || (rbg.length !== 3 && rbg.length !== 6)) {
+	if (!hexRegex.test(rbg) || (rbg.length !== 3 && rbg.length !== 6)) {
 		throw new Error('input is not a valid hex color.')
 	}
-	if (input.length === 3) {
-		const first = input[0]
-		const second = input[1]
-		const last = input[2]
+	if (rbg.length === 3) {
+		const first = rbg[0]
+		const second = rbg[1]
+		const last = rbg[2]
 		rbg = first + first + second + second + last + last
 	}
-	rbg = input.toUpperCase()
-	const first = input[0] + input[1]
-	const second = input[2] + input[3]
-	const last = input[4] + input[5]
+	rbg = rbg.toUpperCase()
+	const first = rbg[0] + rbg[1]
+	const second = rbg[2] + rbg[3]
+	const last = rbg[4] + rbg[5]
 	return `${parseInt(first, 16)}, ${parseInt(second, 16)}, ${parseInt(
 		last,
 		16

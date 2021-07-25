@@ -15,6 +15,7 @@ import styles from './App.styles'
 
 // Components
 import Sidebar from './component/sidebar/Sidebar'
+import NavBar from './component/navbar/NavBar'
 
 const switchRoutes = (
 	<Switch>
@@ -55,6 +56,7 @@ const App = () => {
 				handleDrawerToggle={handleDrawerToggle}
 			/>
 			<div className={classes.mainPanel}>
+				<NavBar color={color} handleDrawerToggle={handleDrawerToggle} />
 				<div className={classes.content}>
 					<div className={classes.container}>{switchRoutes}</div>
 				</div>

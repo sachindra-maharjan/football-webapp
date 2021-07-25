@@ -9,8 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-// import Dashboard from '@material-ui/icons/Dashboard'
-
 // Styles
 import styles, { LogoWrapper } from './Sidebar.styles'
 
@@ -62,12 +60,11 @@ const Sidebar: React.FC<Props> = ({
 						key={prop.name}
 					>
 						<ListItem button className={classes.itemLink + listItemClasses}>
-							<div className={classNames(classes.itemIcon, whiteFontClasses)}>
-								{prop.icon}
-							</div>
+							<prop.icon className={classNames(classes.itemIcon, whiteFontClasses,)}/>
 							<ListItemText
 								primary={prop.name}
 								className={classNames(classes.itemText)}
+								disableTypography
 							/>
 						</ListItem>
 					</NavLink>

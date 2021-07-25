@@ -11,30 +11,37 @@ import Hidden from '@material-ui/core/Hidden'
 import Menu from '@material-ui/icons/Menu'
 // core components
 
-// import { Button } from '@material-ui/core'
 import styles from './NavBar.styles'
-import { Props } from '../sidebar/Sidebar'
+
+// Components
+import Button from '../customButtons/CustomButtons'
+import useRouteName from '../../hooks/useRouteNames'
+
+interface Props {
+	color: string
+	handleDrawerToggle: () => void
+}
 
 const useStyles = makeStyles(styles)
 
-const Header: React.FC<Props> = ({ color, handleDrawerToggle }) => {
+const NavBar: React.FC<Props> = ({ color, handleDrawerToggle }) => {
 	const classes = useStyles()
-	// const routeName = useRouteName()
+	const routeName = useRouteName()
 
 	const appBarClasses = classNames({
-		[` ${classes.primary}`]: { color },
+		[` ${classes.title}`]: { color },
 	})
 	return (
 		<AppBar className={classes.appBar + appBarClasses}>
 			<Toolbar className={classes.container}>
 				<div className={classes.flex}>
 					{/* Here we create navbar brand, based on route name */}
-					{/* <Button color='transparent' href='#' className={classes.title}>
+					<Button color='transparent' className={classes.title} size='sm'>
 						{routeName}
-					</Button> */}
+					</Button>
 				</div>
 				{/* <Hidden smDown implementation='css'>
-					{props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+					{<AdminNavbarLinks />}
 				</Hidden> */}
 				<Hidden mdUp implementation='css'>
 					<IconButton
@@ -50,10 +57,10 @@ const Header: React.FC<Props> = ({ color, handleDrawerToggle }) => {
 	)
 }
 
-Header.propTypes = {
+NavBar.propTypes = {
 	color: PropTypes.oneOf(['primary', 'info', 'success', 'warning', 'danger'])
 		.isRequired,
 	handleDrawerToggle: PropTypes.func.isRequired,
 }
 
-export default Header
+export default NavBar

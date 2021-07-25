@@ -186,7 +186,7 @@ const sidebarStyle = (theme: Theme) =>
 			marginRight: '15px',
 			textAlign: 'center',
 			verticalAlign: 'middle',
-			color: `rgba(${hexToRgb(whiteColor)}, 0.8)`,
+			color: `rgba(${hexToRgb(whiteColor)}, 0.7)`,
 		},
 		itemIconRTL: {
 			marginRight: '3px',
