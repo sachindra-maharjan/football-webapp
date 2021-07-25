@@ -28,12 +28,13 @@ interface Prop {
 	children?: ReactNodeLike
 	disabled?: boolean
 	simple?: boolean
-	size: ButtonSize
+	size?: ButtonSize
 	block?: boolean
 	link?: boolean
 	justIcon?: boolean
-	className: string
+	className?: string
 	muiClasses?: object
+	onClick?: any
 }
 
 const useStyles = makeStyles(styles)
@@ -46,13 +47,22 @@ const RegularButton: React.FC<Prop> = props => {
 		children,
 		disabled,
 		simple,
-		size,
 		block,
 		link,
 		justIcon,
-		className,
 		muiClasses,
+		onClick,
 	} = props
+
+	let { className, size } = props
+
+	if (className === undefined) {
+		className = ''
+	}
+	if (size === undefined) {
+		size = 'sm'
+	}
+
 	const btnClasses = classNames({
 		[classes.button]: true,
 		[classes[size]]: size,
@@ -66,7 +76,8 @@ const RegularButton: React.FC<Prop> = props => {
 		[className]: className,
 	})
 	return (
-		<Button classes={muiClasses} className={btnClasses}>
+		// eslint-disable-next-line react/jsx-props-no-spreading
+		<Button onClick={onClick} classes={muiClasses} className={btnClasses}>
 			{children}
 		</Button>
 	)
@@ -85,18 +96,19 @@ const ColorEnum = PropTypes.oneOf<ButtonColor>([
 
 RegularButton.propTypes = {
 	color: ColorEnum.isRequired,
-	size: PropTypes.oneOf<ButtonSize>(['sm', 'lg']).isRequired,
+	size: PropTypes.oneOf<ButtonSize>(['sm', 'lg']),
 	simple: PropTypes.bool,
 	round: PropTypes.bool,
 	disabled: PropTypes.bool,
 	block: PropTypes.bool,
 	link: PropTypes.bool,
 	justIcon: PropTypes.bool,
-	className: PropTypes.string.isRequired,
+	className: PropTypes.string,
 	// use this to pass the classes props from Material-UI
 	// eslint-disable-next-line react/forbid-prop-types
 	muiClasses: PropTypes.object,
 	children: PropTypes.node,
+	onClick: PropTypes.func,
 }
 
 RegularButton.defaultProps = {
@@ -108,6 +120,9 @@ RegularButton.defaultProps = {
 	justIcon: false,
 	muiClasses: undefined,
 	children: null,
+	className: '',
+	size: 'sm',
+	onClick: undefined,
 }
 
 export default RegularButton

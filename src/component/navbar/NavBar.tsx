@@ -11,11 +11,12 @@ import Hidden from '@material-ui/core/Hidden'
 import Menu from '@material-ui/icons/Menu'
 // core components
 
+import { Button } from '@material-ui/core'
 import styles from './NavBar.styles'
 
 // Components
-import Button from '../customButtons/CustomButtons'
 import useRouteName from '../../hooks/useRouteNames'
+import AdminNavbarLinks from '../navbarLinks/NavBarLinks'
 
 interface Props {
 	color: string
@@ -36,13 +37,11 @@ const NavBar: React.FC<Props> = ({ color, handleDrawerToggle }) => {
 			<Toolbar className={classes.container}>
 				<div className={classes.flex}>
 					{/* Here we create navbar brand, based on route name */}
-					<Button color='transparent' className={classes.title} size='sm'>
-						{routeName}
-					</Button>
+					<Button className={classes.title}>{routeName}</Button>
 				</div>
-				{/* <Hidden smDown implementation='css'>
-					{<AdminNavbarLinks />}
-				</Hidden> */}
+				<Hidden smDown implementation='css'>
+					<AdminNavbarLinks />
+				</Hidden>
 				<Hidden mdUp implementation='css'>
 					<IconButton
 						color='inherit'
