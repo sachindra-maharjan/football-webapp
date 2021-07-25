@@ -1,3 +1,5 @@
+import React from 'react'
+
 // Icons
 import Dashboard from '@material-ui/icons/Dashboard'
 import Group from '@material-ui/icons/Group'
@@ -10,13 +12,13 @@ const routes = [
 	{
 		path: '/dashboard',
 		name: 'Dashboard',
-		icon: Dashboard,
+		icon: <Dashboard />,
 		component: DashboardPage,
 	},
 	{
 		path: '/team',
 		name: 'Team',
-		icon: Group,
+		icon: <Group />,
 		component: TeamPage,
 	},
 ]

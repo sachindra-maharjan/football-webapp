@@ -5,10 +5,11 @@ import { Drawer, Hidden, makeStyles } from '@material-ui/core'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-// import Icon from '@material-ui/core/Icon'
 
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+
+// import Dashboard from '@material-ui/icons/Dashboard'
 
 // Styles
 import styles, { LogoWrapper } from './Sidebar.styles'
@@ -50,9 +51,9 @@ const Sidebar: React.FC<Props> = ({
 				const listItemClasses = classNames({
 					[` ${classes.blue}`]: activeRoute(prop.path),
 				})
-				// const whiteFontClasses = classNames({
-				// 	[` ${classes.whiteFont}`]: activeRoute(prop.path),
-				// })
+				const whiteFontClasses = classNames({
+					[` ${classes.whiteFont}`]: activeRoute(prop.path),
+				})
 				return (
 					<NavLink
 						to={prop.path}
@@ -61,10 +62,9 @@ const Sidebar: React.FC<Props> = ({
 						key={prop.name}
 					>
 						<ListItem button className={classes.itemLink + listItemClasses}>
-							{/* <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>
+							<div className={classNames(classes.itemIcon, whiteFontClasses)}>
 								{prop.icon}
-							</Icon> */}
-
+							</div>
 							<ListItemText
 								primary={prop.name}
 								className={classNames(classes.itemText)}
