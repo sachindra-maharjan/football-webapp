@@ -83,7 +83,7 @@ const Sidebar: React.FC<Props> = ({
 				className={classNames(classes.logoLink, {
 					[classes.logoLinkRTL]: false,
 				})}
-				target='_blank'
+				target='_self'
 				rel='noreferrer'
 			>
 				<div className={classes.logoImage}>

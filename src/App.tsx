@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import routes from './routes'
 
 // Images
-import bgImage from './asset/img/sidebar-4.jpg'
+import bgImage from './asset/img/sidebar-5.jpg'
 import logo from './asset/img/reactlogo.png'
 
 // Styles
