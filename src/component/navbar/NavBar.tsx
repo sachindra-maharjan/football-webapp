@@ -8,15 +8,17 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Hidden from '@material-ui/core/Hidden'
 // @material-ui/icons
-import Menu from '@material-ui/icons/Menu'
+
 // core components
 
-import { Button } from '@material-ui/core'
+// import { Button } from '@material-ui/core'
+
+// Styles
 import styles from './NavBar.styles'
 
 // Components
-import useRouteName from '../../hooks/useRouteNames'
-import AdminNavbarLinks from '../navbarLinks/NavBarLinks'
+import NavbarLinks from '../navbarLinks/NavBarLinks'
+import MenuBar from '../menu/Menu'
 
 interface Props {
 	color: string
@@ -27,8 +29,6 @@ const useStyles = makeStyles(styles)
 
 const NavBar: React.FC<Props> = ({ color, handleDrawerToggle }) => {
 	const classes = useStyles()
-	const routeName = useRouteName()
-
 	const appBarClasses = classNames({
 		[` ${classes.title}`]: { color },
 	})
@@ -36,11 +36,11 @@ const NavBar: React.FC<Props> = ({ color, handleDrawerToggle }) => {
 		<AppBar className={classes.appBar + appBarClasses}>
 			<Toolbar className={classes.container}>
 				<div className={classes.flex}>
-					{/* Here we create navbar brand, based on route name */}
-					<Button className={classes.title}>{routeName}</Button>
+					<MenuBar />
 				</div>
+
 				<Hidden smDown implementation='css'>
-					<AdminNavbarLinks />
+					<NavbarLinks />
 				</Hidden>
 				<Hidden mdUp implementation='css'>
 					<IconButton
@@ -48,7 +48,7 @@ const NavBar: React.FC<Props> = ({ color, handleDrawerToggle }) => {
 						aria-label='open drawer'
 						onClick={handleDrawerToggle}
 					>
-						<Menu />
+						<MenuBar />
 					</IconButton>
 				</Hidden>
 			</Toolbar>

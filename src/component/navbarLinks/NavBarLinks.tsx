@@ -16,7 +16,6 @@ import Poppers from '@material-ui/core/Popper'
 import Notifications from '@material-ui/icons/Notifications'
 import Search from '@material-ui/icons/Search'
 // core components
-// import CustomInput from 'components/CustomInput/CustomInput.js'
 import Button from '../customButtons/CustomButtons'
 import CustomInput from '../customInput/CustomInput'
 
@@ -24,7 +23,7 @@ import styles from './NavBarLinks.styles'
 
 const useStyles = makeStyles(styles)
 
-export default function AdminNavbarLinks() {
+const NavbarLinks: React.FC = () => {
 	const classes = useStyles()
 	const [openNotification, setOpenNotification] =
 		React.useState<null | HTMLElement>(null)
@@ -151,3 +150,5 @@ export default function AdminNavbarLinks() {
 		</div>
 	)
 }
+
+export default NavbarLinks
