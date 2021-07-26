@@ -90,6 +90,6 @@ CustomTable.propTypes = {
 		'rose',
 		'gray',
 	]),
-	tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
-	tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+	tableHead: PropTypes.arrayOf(PropTypes.any).isRequired,
+	tableData: PropTypes.arrayOf(PropTypes.any).isRequired,
 }
