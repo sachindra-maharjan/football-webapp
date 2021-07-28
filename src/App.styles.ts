@@ -6,7 +6,7 @@ const appStyles = (theme: any) =>
 		wrapper: {
 			position: 'relative',
 			top: '0',
-			height: '100vh',
+			height: '98vh',
 		},
 		mainPanel: {
 			[theme.breakpoints.up('md')]: {
