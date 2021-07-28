@@ -13,7 +13,7 @@ const appStyles = (theme: any) =>
 				width: `calc(100% - ${drawerWidth}px)`,
 			},
 			overflow: 'auto',
-			position: 'relative',
+			position: 'sticky',
 			float: 'right',
 			...transition,
 			maxHeight: '100%',
@@ -22,7 +22,7 @@ const appStyles = (theme: any) =>
 		},
 		content: {
 			marginTop: '70px',
-			padding: '30px 15px',
+			padding: '15px',
 			minHeight: 'calc(100vh - 123px)',
 		},
 		container,
