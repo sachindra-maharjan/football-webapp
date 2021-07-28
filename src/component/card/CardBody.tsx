@@ -2,7 +2,7 @@ import React from 'react'
 // nodejs library that concatenates classes
 import classNames from 'classnames'
 // nodejs library to set properties for components
-import PropTypes, { ReactNodeLike } from 'prop-types'
+import PropTypes from 'prop-types'
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles'
 // @material-ui/icons
@@ -10,9 +10,9 @@ import { makeStyles } from '@material-ui/core/styles'
 // styles
 import styles from './CardBody.styles'
 
-interface Props {
+export interface Props {
 	className: string
-	children?: ReactNodeLike
+	children?: React.ReactNode
 	plain?: boolean
 	profile?: boolean
 }

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import classNames from 'classnames'
-import PropTypes, { ReactNodeLike } from 'prop-types'
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // Styles
@@ -20,7 +20,7 @@ export interface Props {
 	plain?: boolean
 	stats?: boolean
 	icon?: boolean
-	children?: ReactNodeLike
+	children?: React.ReactNode
 }
 
 const useStyles = makeStyles(styles)

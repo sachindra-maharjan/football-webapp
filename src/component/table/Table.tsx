@@ -93,3 +93,5 @@ CustomTable.propTypes = {
 	tableHead: PropTypes.arrayOf(PropTypes.any).isRequired,
 	tableData: PropTypes.arrayOf(PropTypes.any).isRequired,
 }
+
+export default CustomTable

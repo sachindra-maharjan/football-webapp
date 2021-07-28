@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles'
 import classNames from 'classnames'
-import PropTypes, { ReactNodeLike } from 'prop-types'
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // Styles
@@ -13,7 +13,7 @@ export interface Props {
 	plain?: boolean
 	profile?: boolean
 	chart?: boolean
-	children?: ReactNodeLike
+	children?: React.ReactNode
 }
 
 const Card: React.FC<Props> = props => {
