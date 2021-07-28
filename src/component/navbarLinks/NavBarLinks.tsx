@@ -53,14 +53,7 @@ const NavbarLinks: React.FC = () => {
 						},
 					}}
 				/>
-				<Button
-					color='white'
-					aria-label='edit'
-					justIcon
-					round
-					simple={false}
-					onClick={() => console.log('Search Button')}
-				>
+				<Button color='white' aria-label='edit' justIcon round simple={false}>
 					<Search />
 				</Button>
 			</div>
