@@ -4,6 +4,11 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import App from './App'
 
+// Redux
+// import { createStore } from 'redux'
+
+// const store = createStore()
+
 const theme = createTheme({
 	typography: {
 		body1: {
