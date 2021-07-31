@@ -51,6 +51,7 @@ const Standings: React.FC<Props> = () => {
 		(state: RootState) => state.league
 	)
 	const [standings, setStandings] = useState<string[][]>([])
+	const [league, setLeague] = useState<string>('')
 
 	const dispatch = useDispatch()
 
@@ -78,6 +79,10 @@ const Standings: React.FC<Props> = () => {
 					t.forme,
 				]
 				allTeams.push(team)
+
+				if (league === '') {
+					setLeague(t.group)
+				}
 			})
 			setStandings(allTeams)
 		}
@@ -89,8 +94,8 @@ const Standings: React.FC<Props> = () => {
 				{loaded ? (
 					<Card className=''>
 						<CardHeader color='primaryCardHeader' className=''>
-							<h4 className={classes.cardTitleWhite}>Premier League</h4>
-							<p className={classes.cardCategoryWhite}>Week 12</p>
+							<h4 className={classes.cardTitleWhite}>{league}</h4>
+							{/* <p className={classes.cardCategoryWhite}>Week 12</p> */}
 						</CardHeader>
 						<CardBody className=''>
 							<Table
