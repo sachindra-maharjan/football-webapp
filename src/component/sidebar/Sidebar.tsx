@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { Drawer, Hidden, makeStyles } from '@material-ui/core'
+import { Drawer, Hidden, Icon, makeStyles } from '@material-ui/core'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -60,7 +60,18 @@ const Sidebar: React.FC<Props> = ({
 						key={prop.name}
 					>
 						<ListItem button className={classes.itemLink + listItemClasses}>
-							<prop.icon className={classNames(classes.itemIcon, whiteFontClasses,)}/>
+							{typeof prop.icon === 'string' ? (
+								<Icon
+									className={classNames(classes.itemIcon, whiteFontClasses)}
+								>
+									{prop.icon}
+								</Icon>
+							) : (
+								<prop.icon
+									className={classNames(classes.itemIcon, whiteFontClasses)}
+								/>
+							)}
+
 							<ListItemText
 								primary={prop.name}
 								className={classNames(classes.itemText)}

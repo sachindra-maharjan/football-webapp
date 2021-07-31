@@ -1,11 +1,15 @@
 import { createStyles, makeStyles } from '@material-ui/styles'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
 import Card from '../../component/card/Card'
 import CardBody from '../../component/card/CardBody'
 import CardHeader from '../../component/card/CardHeader'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import Table from '../../component/table/Table'
+import { RootState } from '../../state'
+import getStandings from '../../state/actions/leagueActions'
 
 const styles = createStyles({
 	cardCategoryWhite: {
@@ -43,114 +47,74 @@ const useStyles = makeStyles(styles)
 
 const Standings: React.FC<Props> = () => {
 	const classes = useStyles()
+	const { teamStandings, loaded } = useSelector(
+		(state: RootState) => state.league
+	)
+	const [standings, setStandings] = useState<string[][]>([])
+
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (!loaded) {
+			dispatch(getStandings())
+		}
+	}, [])
+
+	useEffect(() => {
+		if (teamStandings.length > 0) {
+			const allTeams: string[][] = []
+			teamStandings.forEach(t => {
+				const team: string[] = [
+					t.rank.toString(),
+					t.teamName,
+					t.all.matchsPlayed.toString(),
+					(t.all.win * 3).toString(),
+					t.all.win.toString(),
+					t.all.draw.toString(),
+					t.all.lose.toString(),
+					t.all.goalsFor.toString(),
+					t.all.goalsAgainst.toString(),
+					(t.all.goalsFor - t.all.goalsAgainst).toString(),
+					t.forme,
+				]
+				allTeams.push(team)
+			})
+			setStandings(allTeams)
+		}
+	}, [teamStandings])
 
 	return (
 		<GridContainer>
 			<GridItem xs={12} sm={12} md={12}>
-				<Card className=''>
-					<CardHeader color='primaryCardHeader' className=''>
-						<h4 className={classes.cardTitleWhite}>Premier League</h4>
-						<p className={classes.cardCategoryWhite}>Week 12</p>
-					</CardHeader>
-					<CardBody className=''>
-						<Table
-							tableHeaderColor='primary'
-							tableHead={[
-								'Pos',
-								'Team',
-								'Played',
-								'Won',
-								'Drawn',
-								'Lost',
-								'For',
-								'Against',
-								'Diff',
-								'Points',
-								'Form',
-							]}
-							tableData={[
-								[
-									'1',
-									'Manchester United',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'WWWWWW',
-								],
-								[
-									'2',
-									'Liverpool',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'WWWWWW',
-								],
-								[
-									'3',
-									'Arsenal',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'WWWWWW',
-								],
-								[
-									'4',
-									'Manchester City',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'WWWWWW',
-								],
-								[
-									'5',
-									'Chelsea',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'WWWWWW',
-								],
-								[
-									'6',
-									'Tottenham Spurs',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'0',
-									'WWWWWW',
-								],
-							]}
-						/>
-					</CardBody>
-				</Card>
+				{loaded ? (
+					<Card className=''>
+						<CardHeader color='primaryCardHeader' className=''>
+							<h4 className={classes.cardTitleWhite}>Premier League</h4>
+							<p className={classes.cardCategoryWhite}>Week 12</p>
+						</CardHeader>
+						<CardBody className=''>
+							<Table
+								tableHeaderColor='primary'
+								tableHead={[
+									'Pos',
+									'Team',
+									'Played',
+									'Points',
+									'Won',
+									'Drawn',
+									'Lost',
+									'For',
+									'Against',
+									'Diff',
+									'Form',
+								]}
+								tableData={standings}
+							/>
+						</CardBody>
+					</Card>
+				) : (
+					<div>Loading...</div>
+				)}
 			</GridItem>
 		</GridContainer>
 	)
