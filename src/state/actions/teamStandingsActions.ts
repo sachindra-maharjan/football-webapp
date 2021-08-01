@@ -1,6 +1,7 @@
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '..'
-import { LeagueActionType, TeamStanding, LeagueAction } from '../types'
+import { LeagueActionType, LeagueAction } from '../types'
+import { TeamStanding } from '../types/standings.types'
 import db from '../../firebase/database'
 
 const getStandings = (): ThunkAction<void, RootState, null, LeagueAction> => {

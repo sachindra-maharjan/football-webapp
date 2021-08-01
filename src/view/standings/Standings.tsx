@@ -9,7 +9,7 @@ import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import Table from '../../component/table/Table'
 import { RootState } from '../../state'
-import getStandings from '../../state/actions/leagueActions'
+import getStandings from '../../state/actions/teamStandingsActions'
 
 const styles = createStyles({
 	cardCategoryWhite: {
@@ -95,7 +95,7 @@ const Standings: React.FC<Props> = () => {
 					<Card className=''>
 						<CardHeader color='primaryCardHeader' className=''>
 							<h4 className={classes.cardTitleWhite}>{league}</h4>
-							{/* <p className={classes.cardCategoryWhite}>Week 12</p> */}
+							<p className={classes.cardCategoryWhite}>{}</p>
 						</CardHeader>
 						<CardBody className=''>
 							<Table

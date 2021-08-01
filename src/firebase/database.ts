@@ -1,4 +1,4 @@
-import { TeamStanding } from '../state/types'
+import { TeamStanding } from '../state/types/standings.types'
 import firebase from './config'
 
 // This helper function pipes your types through a firestore converter
