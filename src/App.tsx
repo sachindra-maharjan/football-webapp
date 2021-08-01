@@ -29,7 +29,6 @@ const switchRoutes = (
 		<Redirect from='/' to='/dashboard' />
 	</Switch>
 )
-console.log(switchRoutes)
 
 const useStyles = makeStyles(styles)
 
@@ -40,36 +39,11 @@ const App = () => {
 	// states and functions
 	const [image] = React.useState(bgImage)
 	const [color] = React.useState('blue')
-	// const [color, setColor] = React.useState('blue')
-	// const [fixedClasses, setFixedClasses] = React.useState('dropdown show')
 	const [mobileOpen, setMobileOpen] = React.useState(false)
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
-	// const resizeFunction = () => {
-	// 	if (window.innerWidth >= 960) {
-	// 	  setMobileOpen(false);
-	// 	}
-	//   };
-	// initialize and destroy the PerfectScrollbar plugin
-	// React.useEffect(() => {
-	// 	if (navigator.platform.indexOf("Win") > -1) {
-	// 	  ps = new PerfectScrollbar(mainPanel.current !== null ? mainPanel.current : '', {
-	// 		suppressScrollX: true,
-	// 		suppressScrollY: false,
-	// 	  });
-	// 	  document.body.style.overflow = "hidden";
-	// 	}
-	// 	window.addEventListener("resize", resizeFunction);
-	// 	// Specify how to clean up after this effect:
-	// 	return function cleanup() {
-	// 	  if (navigator.platform.indexOf("Win") > -1) {
-	// 		ps.destroy();
-	// 	  }
-	// 	  window.removeEventListener("resize", resizeFunction);
-	// 	};
-	//   }, [mainPanel]);
 
 	return (
 		<div className={classes.wrapper}>
@@ -82,7 +56,7 @@ const App = () => {
 				handleDrawerToggle={handleDrawerToggle}
 			/>
 			<div className={classes.mainPanel}>
-				<NavBar color={color} handleDrawerToggle={handleDrawerToggle} />
+				<NavBar color='primary' handleDrawerToggle={handleDrawerToggle} />
 				<div className={classes.content}>
 					<div className={classes.container}>{switchRoutes}</div>
 				</div>

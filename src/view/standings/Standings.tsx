@@ -69,7 +69,7 @@ const Standings: React.FC<Props> = () => {
 					t.rank.toString(),
 					t.teamName,
 					t.all.matchsPlayed.toString(),
-					(t.all.win * 3).toString(),
+					(t.all.win * 3 + t.all.draw).toString(),
 					t.all.win.toString(),
 					t.all.draw.toString(),
 					t.all.lose.toString(),
@@ -108,9 +108,9 @@ const Standings: React.FC<Props> = () => {
 									'Won',
 									'Drawn',
 									'Lost',
-									'For',
-									'Against',
-									'Diff',
+									'GF',
+									'GA',
+									'GD',
 									'Form',
 								]}
 								tableData={standings}
