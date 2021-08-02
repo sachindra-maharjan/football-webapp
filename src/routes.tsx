@@ -10,6 +10,9 @@ import BubbleChart from '@material-ui/icons/BubbleChart'
 import DashboardPage from './view/dashboard/Dashboard'
 import TeamPage from './view/team/Team'
 import StandingsPage from './view/standings/Standings'
+import PlayersPage from './view/players/Players'
+import StatisticsPage from './view/statistics/Statistics'
+import AnalyticsPage from './view/analytics/Analytics'
 
 const routes = [
 	{
@@ -17,36 +20,42 @@ const routes = [
 		name: 'Dashboard',
 		icon: Dashboard,
 		component: DashboardPage,
+		active: true,
 	},
 	{
 		path: '/team',
 		name: 'Team',
 		icon: Group,
 		component: TeamPage,
+		active: true,
 	},
 	{
 		path: '/standings',
 		name: 'Standings',
 		icon: TableChart,
 		component: StandingsPage,
+		active: true,
 	},
 	{
-		path: '/dashboard',
+		path: '/players',
 		name: 'Players',
 		icon: Person,
-		component: DashboardPage,
+		component: PlayersPage,
+		active: true,
 	},
 	{
-		path: '/dashboard',
-		name: 'Stats',
+		path: '/statistics',
+		name: 'Statistics',
 		icon: Assessment,
-		component: DashboardPage,
+		component: StatisticsPage,
+		active: true,
 	},
 	{
-		path: '/dashboard',
+		path: '/analytics',
 		name: 'Analytics',
 		icon: BubbleChart,
-		component: DashboardPage,
+		component: AnalyticsPage,
+		active: true,
 	},
 ]
 
