@@ -12,11 +12,19 @@ const getStandings = (): ThunkAction<void, RootState, null, LeagueAction> => {
 				.standings('premierleague', 'leagueId_2')
 				.orderBy('rank', 'asc')
 				.get()
-
 			docs.forEach(doc => {
 				const teamStanding = doc.data()
 				arr.push(teamStanding)
 			})
+
+			// const ref = db.standings('premierleague', 'leagueId_2')
+
+			// ref.onSnapshot(querySnapshot => {
+			// 	querySnapshot.forEach(doc => {
+			// 		const teamStanding = doc.data()
+			// 		arr.push(teamStanding)
+			// 	})
+			// })
 
 			dispatch({
 				type: LeagueActionType.GET_STANDINGS,

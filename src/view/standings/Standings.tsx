@@ -91,7 +91,9 @@ const Standings: React.FC<Props> = () => {
 	return (
 		<GridContainer>
 			<GridItem xs={12} sm={12} md={12}>
-				{loaded ? (
+				{!loaded ? (
+					<div>Loading...</div>
+				) : (
 					<Card className=''>
 						<CardHeader color='primaryCardHeader' className=''>
 							<h4 className={classes.cardTitleWhite}>{league}</h4>
@@ -117,8 +119,6 @@ const Standings: React.FC<Props> = () => {
 							/>
 						</CardBody>
 					</Card>
-				) : (
-					<div>Loading...</div>
 				)}
 			</GridItem>
 		</GridContainer>
