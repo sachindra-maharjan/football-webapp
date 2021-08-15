@@ -26,5 +26,5 @@ export interface LeagueCoverage {
 // States
 export interface LeagueSeasonState {
 	seasons: LeagueSeason[]
-	loaded: boolean
+	seasonsLoaded: boolean
 }

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles'
@@ -17,6 +18,9 @@ import styles from './App.styles'
 // Components
 import Sidebar from './component/sidebar/Sidebar'
 import NavBar from './component/navbar/NavBar'
+
+import { RootState } from './state'
+import getCurrentSeason from './state/actions/leagueActions'
 
 // let ps: PerfectScrollbar
 const switchRoutes = (
@@ -44,6 +48,16 @@ const App = () => {
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
+
+	const { seasonsLoaded } = useSelector((state: RootState) => state.league)
+
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (!seasonsLoaded) {
+			dispatch(getCurrentSeason())
+		}
+	}, [])
 
 	return (
 		<div className={classes.wrapper}>

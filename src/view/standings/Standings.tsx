@@ -10,6 +10,7 @@ import GridItem from '../../component/grid/GridItem'
 import Table from '../../component/table/Table'
 import { RootState } from '../../state'
 import getStandings from '../../state/actions/teamStandingsActions'
+import { LeagueSeason } from '../../state/types/league.types'
 
 const styles = createStyles({
 	cardCategoryWhite: {
@@ -48,8 +49,13 @@ const useStyles = makeStyles(styles)
 const Standings: React.FC<Props> = () => {
 	const classes = useStyles()
 	const { teamStandings, loaded } = useSelector(
+		(state: RootState) => state.standings
+	)
+	const { seasons, seasonsLoaded } = useSelector(
 		(state: RootState) => state.league
 	)
+
+	const [leagueSeason, setLeagueSeason] = useState<LeagueSeason>()
 	const [standings, setStandings] = useState<string[][]>([])
 	const [league, setLeague] = useState<string>('')
 
@@ -60,6 +66,12 @@ const Standings: React.FC<Props> = () => {
 			dispatch(getStandings())
 		}
 	}, [])
+
+	useEffect(() => {
+		if (seasonsLoaded) {
+			setLeagueSeason(seasons[0])
+		}
+	}, [leagueSeason])
 
 	useEffect(() => {
 		if (teamStandings.length > 0) {
@@ -97,7 +109,9 @@ const Standings: React.FC<Props> = () => {
 					<Card className=''>
 						<CardHeader color='primaryCardHeader' className=''>
 							<h4 className={classes.cardTitleWhite}>{league}</h4>
-							<p className={classes.cardCategoryWhite}>{}</p>
+							<p className={classes.cardCategoryWhite}>
+								{leagueSeason !== undefined ? leagueSeason.season : ''}
+							</p>
 						</CardHeader>
 						<CardBody className=''>
 							<Table

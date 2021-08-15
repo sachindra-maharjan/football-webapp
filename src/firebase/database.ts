@@ -1,3 +1,4 @@
+import { LeagueSeason } from '../state/types/league.types'
 import { TeamStanding } from '../state/types/standings.types'
 import firebase from './config'
 
@@ -17,6 +18,8 @@ const db = {
 		dataPoint<TeamStanding>(
 			`/football-leagues/${leagueType}/leagues/${leageuId}/standings`
 		),
+	seasons: (leagueType: string) =>
+		dataPoint<LeagueSeason>(`/football-leagues/${leagueType}/leagues`),
 }
 
 export default db

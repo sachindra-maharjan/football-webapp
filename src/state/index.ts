@@ -5,11 +5,13 @@ import { firebaseReducer } from 'react-redux-firebase'
 import { firestoreReducer } from 'redux-firestore'
 
 // reducers
-import leagueReducer from './reducers/teamStandingReducer'
+import standingsReducer from './reducers/teamStandingReducer'
+import leagueReducer from './reducers/leagueReducer'
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
 	firestore: firestoreReducer,
+	standings: standingsReducer,
 	league: leagueReducer,
 })
 

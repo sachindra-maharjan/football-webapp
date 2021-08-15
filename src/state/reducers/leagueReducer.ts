@@ -3,7 +3,7 @@ import { LeagueSeasonState } from '../types/league.types'
 
 const initialState: LeagueSeasonState = {
 	seasons: [],
-	loaded: false,
+	seasonsLoaded: false,
 }
 
 export default (state = initialState, action: LeagueAction) => {
@@ -11,8 +11,8 @@ export default (state = initialState, action: LeagueAction) => {
 		case LeagueActionType.GET_SEASONS:
 			return {
 				...state,
-				seaons: action.payload,
-				loaded: true,
+				seasons: action.payload,
+				seasonsLoaded: true,
 			}
 		default:
 			return state
