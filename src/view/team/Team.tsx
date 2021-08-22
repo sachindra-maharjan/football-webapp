@@ -1,5 +1,5 @@
 import React from 'react'
 
-const team = () => <div>Team</div>
+const Team = () => <div>Team</div>
 
-export default team
+export default Team

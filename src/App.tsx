@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles'
 
+// import PerfectScrollbar from 'perfect-scrollbar'
 import routes from './routes'
 
 // Images
@@ -17,6 +19,10 @@ import styles from './App.styles'
 import Sidebar from './component/sidebar/Sidebar'
 import NavBar from './component/navbar/NavBar'
 
+import { RootState } from './state'
+import getCurrentSeason from './state/actions/leagueActions'
+
+// let ps: PerfectScrollbar
 const switchRoutes = (
 	<Switch>
 		{routes.map(prop => {
@@ -33,17 +39,25 @@ const useStyles = makeStyles(styles)
 const App = () => {
 	const classes = useStyles()
 	// ref to help us initialize PerfectScrollbar on windows devices
-	// const mainPanel = React.createRef()
+	// const mainPanel: React.RefObject<Element> = React.createRef<Element>()
 	// states and functions
 	const [image] = React.useState(bgImage)
 	const [color] = React.useState('blue')
-	// const [color, setColor] = React.useState('blue')
-	// const [fixedClasses, setFixedClasses] = React.useState('dropdown show')
 	const [mobileOpen, setMobileOpen] = React.useState(false)
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
+
+	const { seasonsLoaded } = useSelector((state: RootState) => state.league)
+
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (!seasonsLoaded) {
+			dispatch(getCurrentSeason())
+		}
+	}, [])
 
 	return (
 		<div className={classes.wrapper}>
@@ -56,7 +70,7 @@ const App = () => {
 				handleDrawerToggle={handleDrawerToggle}
 			/>
 			<div className={classes.mainPanel}>
-				<NavBar color={color} handleDrawerToggle={handleDrawerToggle} />
+				<NavBar color='primary' handleDrawerToggle={handleDrawerToggle} />
 				<div className={classes.content}>
 					<div className={classes.container}>{switchRoutes}</div>
 				</div>

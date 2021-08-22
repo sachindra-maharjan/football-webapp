@@ -1,11 +1,16 @@
 import { createStyles, makeStyles } from '@material-ui/styles'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
 import Card from '../../component/card/Card'
 import CardBody from '../../component/card/CardBody'
 import CardHeader from '../../component/card/CardHeader'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import Table from '../../component/table/Table'
+import { RootState } from '../../state'
+import getStandings from '../../state/actions/teamStandingsActions'
+import { LeagueSeason } from '../../state/types/league.types'
 
 const styles = createStyles({
 	cardCategoryWhite: {
@@ -43,30 +48,92 @@ const useStyles = makeStyles(styles)
 
 const Standings: React.FC<Props> = () => {
 	const classes = useStyles()
+	const { teamStandings, loaded } = useSelector(
+		(state: RootState) => state.standings
+	)
+	const { seasons, seasonsLoaded } = useSelector(
+		(state: RootState) => state.league
+	)
+
+	const [leagueSeason, setLeagueSeason] = useState<LeagueSeason>()
+	const [standings, setStandings] = useState<string[][]>([])
+	const [league, setLeague] = useState<string>('')
+
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (!loaded) {
+			dispatch(getStandings())
+		}
+	}, [])
+
+	useEffect(() => {
+		if (seasonsLoaded) {
+			setLeagueSeason(seasons[0])
+		}
+	}, [leagueSeason])
+
+	useEffect(() => {
+		if (teamStandings.length > 0) {
+			const allTeams: string[][] = []
+			teamStandings.forEach(t => {
+				const team: string[] = [
+					t.rank.toString(),
+					t.teamName,
+					t.all.matchsPlayed.toString(),
+					(t.all.win * 3 + t.all.draw).toString(),
+					t.all.win.toString(),
+					t.all.draw.toString(),
+					t.all.lose.toString(),
+					t.all.goalsFor.toString(),
+					t.all.goalsAgainst.toString(),
+					(t.all.goalsFor - t.all.goalsAgainst).toString(),
+					t.forme,
+				]
+				allTeams.push(team)
+
+				if (league === '') {
+					setLeague(t.group)
+				}
+			})
+			setStandings(allTeams)
+		}
+	}, [teamStandings])
 
 	return (
 		<GridContainer>
 			<GridItem xs={12} sm={12} md={12}>
-				<Card className=''>
-					<CardHeader color='primaryCardHeader' className=''>
-						<h4 className={classes.cardTitleWhite}>Premier League</h4>
-						<p className={classes.cardCategoryWhite}>Week 12</p>
-					</CardHeader>
-					<CardBody className=''>
-						<Table
-							tableHeaderColor='primary'
-							tableHead={['Pos', 'Team', 'Points', 'Goal Diff']}
-							tableData={[
-								['Dakota Rice', 'Niger', 'Oud-Turnhout', '$36,738'],
-								['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-								['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-								['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-								['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-								['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-							]}
-						/>
-					</CardBody>
-				</Card>
+				{!loaded ? (
+					<div>Loading...</div>
+				) : (
+					<Card className=''>
+						<CardHeader color='primaryCardHeader' className=''>
+							<h4 className={classes.cardTitleWhite}>{league}</h4>
+							<p className={classes.cardCategoryWhite}>
+								{leagueSeason !== undefined ? leagueSeason.season : ''}
+							</p>
+						</CardHeader>
+						<CardBody className=''>
+							<Table
+								tableHeaderColor='primary'
+								tableHead={[
+									'Pos',
+									'Team',
+									'Played',
+									'Points',
+									'Won',
+									'Drawn',
+									'Lost',
+									'GF',
+									'GA',
+									'GD',
+									'Form',
+								]}
+								tableData={standings}
+							/>
+						</CardBody>
+					</Card>
+				)}
 			</GridItem>
 		</GridContainer>
 	)

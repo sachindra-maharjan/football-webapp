@@ -17,22 +17,22 @@ const Menu: React.FC<Prop> = () => {
 				<List className={classes.list}>
 					<ListItem className={classes.inlineBlock}>
 						<a href='#home' className={classes.block}>
-							Home
+							Premier League
 						</a>
 					</ListItem>
 					<ListItem className={classes.inlineBlock}>
 						<a href='#company' className={classes.block}>
-							Standings
+							La-Liga
 						</a>
 					</ListItem>
 					<ListItem className={classes.inlineBlock}>
 						<a href='#portfolio' className={classes.block}>
-							Fixtures
+							Bundesliga
 						</a>
 					</ListItem>
 					<ListItem className={classes.inlineBlock}>
 						<a href='#blog' className={classes.block}>
-							Teams
+							Seria A
 						</a>
 					</ListItem>
 				</List>
