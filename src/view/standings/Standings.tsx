@@ -1,6 +1,7 @@
 import { createStyles, makeStyles } from '@material-ui/styles'
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
 
 import Card from '../../component/card/Card'
 import CardBody from '../../component/card/CardBody'
@@ -8,9 +9,9 @@ import CardHeader from '../../component/card/CardHeader'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import Table from '../../component/table/Table'
-import { RootState } from '../../state'
-import getStandings from '../../state/actions/teamStandingsActions'
-import { LeagueSeason } from '../../state/types/league.types'
+import convertToObj from '../../firebase/convert'
+import { AppState } from '../../state/reducer'
+import { StandingStat } from '../../state/types/standings.types'
 
 const styles = createStyles({
 	cardCategoryWhite: {
@@ -48,53 +49,64 @@ const useStyles = makeStyles(styles)
 
 const Standings: React.FC<Props> = () => {
 	const classes = useStyles()
-	const { teamStandings, loaded } = useSelector(
-		(state: RootState) => state.standings
-	)
-	const { seasons, seasonsLoaded } = useSelector(
-		(state: RootState) => state.league
-	)
 
-	const [leagueSeason, setLeagueSeason] = useState<LeagueSeason>()
 	const [standings, setStandings] = useState<string[][]>([])
-	const [league, setLeague] = useState<string>('')
+	const [leagueName, setLeagueName] = useState<string>('')
+	const [leagueSeason, setLeagueSeason] = useState<string>('')
 
-	const dispatch = useDispatch()
+	const season = useSelector(
+		(state: AppState) => state.firestore.ordered.seasons
+	)
+
+	const selectTeamStandings = (state: AppState) =>
+		state.firestore.ordered.standings
+
+	const teamStandings = useSelector((state: AppState) =>
+		selectTeamStandings(state)
+	)
+
+	let leagueId = '#'
+	let currentSeason = ''
+	let currentLeagueName = ''
+	if (isLoaded(season)) {
+		leagueId = season[0].id.toString()
+		currentSeason = season[0].season.toString()
+		currentLeagueName = 'Premier League'
+	}
+
+	useFirestoreConnect([
+		{
+			collection: '/football-leagues/premierleague/leagues',
+			doc: leagueId,
+			subcollections: [{ collection: 'standings', orderBy: ['rank', 'asc'] }],
+			storeAs: 'standings',
+		},
+	])
 
 	useEffect(() => {
-		if (!loaded) {
-			dispatch(getStandings())
-		}
-	}, [])
+		setLeagueName(currentLeagueName)
+		setLeagueSeason(currentSeason)
+	})
 
 	useEffect(() => {
-		if (seasonsLoaded) {
-			setLeagueSeason(seasons[0])
-		}
-	}, [leagueSeason])
-
-	useEffect(() => {
-		if (teamStandings.length > 0) {
+		if (isLoaded(teamStandings)) {
 			const allTeams: string[][] = []
 			teamStandings.forEach(t => {
+				const all = convertToObj<StandingStat>(t.all)
 				const team: string[] = [
 					t.rank.toString(),
-					t.teamName,
-					t.all.matchsPlayed.toString(),
-					(t.all.win * 3 + t.all.draw).toString(),
-					t.all.win.toString(),
-					t.all.draw.toString(),
-					t.all.lose.toString(),
-					t.all.goalsFor.toString(),
-					t.all.goalsAgainst.toString(),
-					(t.all.goalsFor - t.all.goalsAgainst).toString(),
-					t.forme,
+					t.teamName.toString(),
+					all.matchsPlayed.toString(),
+					(all.win * 3 + all.draw).toString(),
+					all.win.toString(),
+					all.draw.toString(),
+					all.lose.toString(),
+					all.goalsFor.toString(),
+					all.goalsAgainst.toString(),
+					(all.goalsFor - all.goalsAgainst).toString(),
+					t.forme.toString(),
 				]
 				allTeams.push(team)
-
-				if (league === '') {
-					setLeague(t.group)
-				}
 			})
 			setStandings(allTeams)
 		}
@@ -103,15 +115,13 @@ const Standings: React.FC<Props> = () => {
 	return (
 		<GridContainer>
 			<GridItem xs={12} sm={12} md={12}>
-				{!loaded ? (
+				{!isLoaded(teamStandings) || standings.length === 0 ? (
 					<div>Loading...</div>
 				) : (
 					<Card className=''>
 						<CardHeader color='primaryCardHeader' className=''>
-							<h4 className={classes.cardTitleWhite}>{league}</h4>
-							<p className={classes.cardCategoryWhite}>
-								{leagueSeason !== undefined ? leagueSeason.season : ''}
-							</p>
+							<h4 className={classes.cardTitleWhite}>{leagueName}</h4>
+							<p className={classes.cardCategoryWhite}>{leagueSeason}</p>
 						</CardHeader>
 						<CardBody className=''>
 							<Table

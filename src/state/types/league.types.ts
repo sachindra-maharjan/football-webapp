@@ -2,7 +2,6 @@
 
 export interface LeagueSeason {
 	leagueId: number
-	leageuName: string
 	season: string
 	seasonStart: Date
 	seasonEnd: Date
@@ -21,6 +20,11 @@ export interface LeagueCoverage {
 	standings: boolean
 	predictions: boolean
 	fixtures: LeagueCoverageFixtures
+}
+
+export interface Seasons {
+	seasons: LeagueSeason
+	done: boolean
 }
 
 // States

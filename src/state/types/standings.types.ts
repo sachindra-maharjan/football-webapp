@@ -21,7 +21,6 @@ export interface TeamStanding {
 }
 
 // States
-
 export interface StandingsState {
 	teamStandings: TeamStanding[]
 	loaded: boolean

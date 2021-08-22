@@ -1,26 +1,24 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useFirestoreConnect } from 'react-redux-firebase'
 
-// Material UI
+// State
 import { makeStyles } from '@material-ui/core/styles'
 
-// import PerfectScrollbar from 'perfect-scrollbar'
-import routes from './routes'
-
-// Images
-import bgImage from './asset/img/sidebar-5.jpg'
-import logo from './asset/img/reactlogo.png'
+// Material UI
 
 // Styles
 import styles from './App.styles'
+
+import routes from './routes'
 
 // Components
 import Sidebar from './component/sidebar/Sidebar'
 import NavBar from './component/navbar/NavBar'
 
-import { RootState } from './state'
-import getCurrentSeason from './state/actions/leagueActions'
+// Image
+const bgImage = require('./asset/img/sidebar-5.jpg')
+const logo = require('./asset/img/reactlogo.png')
 
 // let ps: PerfectScrollbar
 const switchRoutes = (
@@ -44,20 +42,27 @@ const App = () => {
 	const [image] = React.useState(bgImage)
 	const [color] = React.useState('blue')
 	const [mobileOpen, setMobileOpen] = React.useState(false)
+	const [selectedLeague] = React.useState('premierleague')
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
-
-	const { seasonsLoaded } = useSelector((state: RootState) => state.league)
-
-	const dispatch = useDispatch()
-
-	useEffect(() => {
-		if (!seasonsLoaded) {
-			dispatch(getCurrentSeason())
-		}
-	}, [])
+	const year = new Date().getFullYear() - 1
+	useFirestoreConnect([
+		{
+			collection: '/football-leagues',
+			doc: selectedLeague,
+			subcollections: [
+				{
+					collection: 'leagues',
+					where: ['season', '>=', year.toString()],
+					orderBy: ['season', 'desc'],
+					limit: 1,
+				},
+			],
+			storeAs: 'seasons',
+		},
+	])
 
 	return (
 		<div className={classes.wrapper}>
