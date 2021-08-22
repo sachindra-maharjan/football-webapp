@@ -17,8 +17,8 @@ import Sidebar from './component/sidebar/Sidebar'
 import NavBar from './component/navbar/NavBar'
 
 // Image
-const bgImage = require('./asset/img/sidebar-5.jpg')
-const logo = require('./asset/img/reactlogo.png')
+import logo from './asset/img/reactlogo.png'
+import bgImage from './asset/img/sidebar-5.jpg'
 
 // let ps: PerfectScrollbar
 const switchRoutes = (
@@ -48,6 +48,16 @@ const App = () => {
 		setMobileOpen(!mobileOpen)
 	}
 	const year = new Date().getFullYear() - 1
+
+	useFirestoreConnect([
+		{
+			collection: '/football-leagues',
+			doc: selectedLeague,
+			storeAs: 'league',
+		},
+	])
+
+	// Get Default Current Season
 	useFirestoreConnect([
 		{
 			collection: '/football-leagues',

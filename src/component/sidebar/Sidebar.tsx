@@ -31,8 +31,8 @@ export interface Props {
 
 const Sidebar: React.FC<Props> = ({
 	routes,
-	logo,
 	image,
+	logo,
 	open,
 	handleDrawerToggle,
 }) => {

@@ -2,9 +2,10 @@ import { combineReducers } from 'redux'
 import { firebaseReducer, FirebaseReducer } from 'react-redux-firebase'
 import { firestoreReducer, FirestoreReducer } from 'redux-firestore'
 import { TeamStanding } from './types/standings.types'
-import { LeagueSeason } from './types/league.types'
+import { League, LeagueSeason } from './types/league.types'
 
 interface FirestoreSchema {
+	league: League
 	seasons: LeagueSeason
 	standings: TeamStanding
 	[name: string]: any

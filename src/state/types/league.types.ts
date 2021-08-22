@@ -1,10 +1,19 @@
 // Interfaces
 
+export interface League {
+	country: string
+	countryCode: string
+	logo: string
+	name: string
+	type: string
+}
+
 export interface LeagueSeason {
 	leagueId: number
 	season: string
 	seasonStart: Date
 	seasonEnd: Date
+	coverage: LeagueCoverage
 }
 
 export interface LeagueCoverageFixtures {

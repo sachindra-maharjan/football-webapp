@@ -54,6 +54,10 @@ const Standings: React.FC<Props> = () => {
 	const [leagueName, setLeagueName] = useState<string>('')
 	const [leagueSeason, setLeagueSeason] = useState<string>('')
 
+	const league = useSelector(
+		(state: AppState) => state.firestore.ordered.league
+	)
+
 	const season = useSelector(
 		(state: AppState) => state.firestore.ordered.seasons
 	)
@@ -68,6 +72,11 @@ const Standings: React.FC<Props> = () => {
 	let leagueId = '#'
 	let currentSeason = ''
 	let currentLeagueName = ''
+
+	if (isLoaded(league) && league.length > 0) {
+		currentLeagueName = league[0].name.toString()
+	}
+
 	if (isLoaded(season)) {
 		leagueId = season[0].id.toString()
 		currentSeason = season[0].season.toString()
