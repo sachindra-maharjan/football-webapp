@@ -27,7 +27,7 @@ const Menu: React.FC<Prop> = () => {
 			const appsettings = convertToObj<Settings>(settings)
 			setAvailableLeague(appsettings.available)
 		}
-	})
+	}, [settings])
 
 	return (
 		<div className={classes.container}>

@@ -93,7 +93,7 @@ const App = () => {
 		if (isLoaded(settings)) {
 			setSelectedLeague(settings.default.toString())
 		}
-	})
+	}, [settings])
 
 	return (
 		<div className={classes.wrapper}>
