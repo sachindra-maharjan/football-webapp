@@ -1,13 +1,13 @@
 import routes from '../routes'
 
-const useRouteName = () => {
-	let name = ''
+const useRoutePath = () => {
+	let path = ''
 	routes.forEach(route => {
 		if (window.location.href.indexOf(route.path) !== -1) {
-			name = route.name
+			path = route.path
 		}
 	})
-	return name
+	return path
 }
 
-export default useRouteName
+export default useRoutePath
