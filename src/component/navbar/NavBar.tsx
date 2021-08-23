@@ -26,6 +26,7 @@ const NavBar: React.FC<Props> = ({ color }) => {
 	const appBarClasses = classNames({
 		[` ${classes.title}`]: { color },
 	})
+
 	return (
 		<AppBar className={classes.appBar + appBarClasses}>
 			<Toolbar className={classes.container}>

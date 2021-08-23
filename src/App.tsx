@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { useFirestoreConnect } from 'react-redux-firebase'
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
 
 // State
 import { makeStyles } from '@material-ui/core/styles'
+
+import { useSelector } from 'react-redux'
+import { AppState } from './state/reducer'
 
 // Material UI
 
@@ -42,12 +45,20 @@ const App = () => {
 	const [image] = React.useState(bgImage)
 	const [color] = React.useState('blue')
 	const [mobileOpen, setMobileOpen] = React.useState(false)
-	const [selectedLeague] = React.useState('premierleague')
+	const [selectedLeague, setSelectedLeague] = React.useState('premierleague')
+	const year = new Date().getFullYear() - 1
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
-	const year = new Date().getFullYear() - 1
+
+	useFirestoreConnect([
+		{
+			collection: '/appSettings',
+			doc: 'league',
+			storeAs: 'settings',
+		},
+	])
 
 	useFirestoreConnect([
 		{
@@ -73,6 +84,16 @@ const App = () => {
 			storeAs: 'seasons',
 		},
 	])
+
+	const settings = useSelector(
+		(state: AppState) => state.firestore.data.settings
+	)
+
+	useEffect(() => {
+		if (isLoaded(settings)) {
+			setSelectedLeague(settings.default.toString())
+		}
+	})
 
 	return (
 		<div className={classes.wrapper}>

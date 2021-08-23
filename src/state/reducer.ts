@@ -3,8 +3,10 @@ import { firebaseReducer, FirebaseReducer } from 'react-redux-firebase'
 import { firestoreReducer, FirestoreReducer } from 'redux-firestore'
 import { TeamStanding } from './types/standings.types'
 import { League, LeagueSeason } from './types/league.types'
+import { Settings } from './types/settings'
 
 interface FirestoreSchema {
+	settings: Settings
 	league: League
 	seasons: LeagueSeason
 	standings: TeamStanding
