@@ -45,13 +45,22 @@ const App = () => {
 	const [image] = React.useState(bgImage)
 	const [color] = React.useState('blue')
 	const [mobileOpen, setMobileOpen] = React.useState(false)
-	const [selectedLeague, setSelectedLeague] = React.useState('premierleague')
+	const [currentLeague, setCurrentLeague] = React.useState('premierleague')
 	const year = new Date().getFullYear() - 1
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
 
+	// Selectors
+	const { selectedLeague, selectedLeagueLoaded } = useSelector(
+		(state: AppState) => state.selectedLeague
+	)
+	const settings = useSelector(
+		(state: AppState) => state.firestore.data.settings
+	)
+
+	// Firestore
 	useFirestoreConnect([
 		{
 			collection: '/appSettings',
@@ -63,7 +72,7 @@ const App = () => {
 	useFirestoreConnect([
 		{
 			collection: '/football-leagues',
-			doc: selectedLeague,
+			doc: currentLeague,
 			storeAs: 'league',
 		},
 	])
@@ -72,7 +81,7 @@ const App = () => {
 	useFirestoreConnect([
 		{
 			collection: '/football-leagues',
-			doc: selectedLeague,
+			doc: currentLeague,
 			subcollections: [
 				{
 					collection: 'leagues',
@@ -81,17 +90,20 @@ const App = () => {
 					limit: 1,
 				},
 			],
-			storeAs: 'seasons',
+			storeAs: `seasons`,
 		},
 	])
 
-	const settings = useSelector(
-		(state: AppState) => state.firestore.data.settings
-	)
+	// React Hooks
+	useEffect(() => {
+		if (selectedLeagueLoaded) {
+			setCurrentLeague(selectedLeague)
+		}
+	}, [selectedLeague])
 
 	useEffect(() => {
 		if (isLoaded(settings)) {
-			setSelectedLeague(settings.default.toString())
+			setCurrentLeague(settings.default.toString())
 		}
 	}, [settings])
 

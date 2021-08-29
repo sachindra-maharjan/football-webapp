@@ -1,10 +1,11 @@
 import { List, ListItem, makeStyles } from '@material-ui/core'
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { isLoaded } from 'react-redux-firebase'
 import { NavLink } from 'react-router-dom'
 import convertToObj from '../../firebase/convert'
 import useRouteName from '../../hooks/useRouteNames'
+import getCurrentSelectedLeague from '../../state/action/settingsAction'
 import { AppState } from '../../state/reducer'
 import { AvailableLeague, Settings } from '../../state/types/settings'
 
@@ -20,6 +21,7 @@ const Menu: React.FC<Prop> = () => {
 	const [availableLeague, setAvailableLeague] =
 		React.useState<AvailableLeague>()
 	const [currentRoute, setCurrentRoute] = React.useState<string>('')
+	const [selectedLeague, setSelectedLeague] = React.useState<string>('')
 
 	const settings = useSelector(
 		(state: AppState) => state.firestore.data.settings
@@ -32,7 +34,18 @@ const Menu: React.FC<Prop> = () => {
 		}
 	}, [settings])
 
-	useEffect(() => setCurrentRoute(useRouteName()))
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (selectedLeague && selectedLeague.length > 0) {
+			dispatch(getCurrentSelectedLeague(selectedLeague))
+			setSelectedLeague(selectedLeague)
+		}
+	}, [selectedLeague])
+
+	useEffect(() => {
+		setCurrentRoute(useRouteName())
+	})
 
 	return (
 		<div className={classes.container}>
@@ -44,6 +57,7 @@ const Menu: React.FC<Prop> = () => {
 							className=''
 							activeClassName=''
 							key='premierleague'
+							onClick={() => setSelectedLeague('premierleague')}
 						>
 							<ListItem className={classes.inlineBlock}>
 								<a href='/dashboard' className={classes.block}>
@@ -60,6 +74,7 @@ const Menu: React.FC<Prop> = () => {
 							className=''
 							activeClassName=''
 							key='laliga'
+							onClick={() => setSelectedLeague('laliga')}
 						>
 							<ListItem className={classes.inlineBlock}>
 								<a href='/dashboard' className={classes.block}>
@@ -76,6 +91,7 @@ const Menu: React.FC<Prop> = () => {
 							className=''
 							activeClassName=''
 							key='bundesliga'
+							onClick={() => setSelectedLeague('bundesliga')}
 						>
 							<ListItem className={classes.inlineBlock}>
 								<a href='/dashboard' className={classes.block}>
@@ -92,6 +108,7 @@ const Menu: React.FC<Prop> = () => {
 							className=''
 							activeClassName=''
 							key='serieA'
+							onClick={() => setSelectedLeague('serieA')}
 						>
 							<ListItem className={classes.inlineBlock}>
 								<a href='/dashboard' className={classes.block}>

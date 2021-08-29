@@ -50,10 +50,16 @@ const useStyles = makeStyles(styles)
 const Standings: React.FC<Props> = () => {
 	const classes = useStyles()
 
+	let leagueId = '#'
+	let currentSeason = ''
+	let currentLeagueName = ''
+
+	// States
 	const [standings, setStandings] = useState<string[][]>([])
 	const [leagueName, setLeagueName] = useState<string>('')
 	const [leagueSeason, setLeagueSeason] = useState<string>('')
 
+	// Selectors
 	const league = useSelector(
 		(state: AppState) => state.firestore.ordered.league
 	)
@@ -69,9 +75,9 @@ const Standings: React.FC<Props> = () => {
 		selectTeamStandings(state)
 	)
 
-	let leagueId = '#'
-	let currentSeason = ''
-	let currentLeagueName = ''
+	const { selectedLeague } = useSelector(
+		(state: AppState) => state.selectedLeague
+	)
 
 	if (isLoaded(league) && league.length > 0) {
 		currentLeagueName = league[0].name.toString()
@@ -83,19 +89,29 @@ const Standings: React.FC<Props> = () => {
 		currentLeagueName = 'Premier League'
 	}
 
+	// Firestore
 	useFirestoreConnect([
 		{
-			collection: '/football-leagues/premierleague/leagues',
-			doc: leagueId,
-			subcollections: [{ collection: 'standings', orderBy: ['rank', 'asc'] }],
+			collection: '/football-leagues',
+			doc: selectedLeague,
+			subcollections: [
+				{
+					collection: '/leagues',
+					doc: leagueId,
+					subcollections: [
+						{ collection: 'standings', orderBy: ['rank', 'asc'] },
+					],
+				},
+			],
 			storeAs: 'standings',
 		},
 	])
 
+	// React Hooks
 	useEffect(() => {
 		setLeagueName(currentLeagueName)
 		setLeagueSeason(currentSeason)
-	})
+	}, [currentLeagueName, currentSeason])
 
 	useEffect(() => {
 		if (isLoaded(teamStandings)) {
