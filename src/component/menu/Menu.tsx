@@ -5,7 +5,7 @@ import { isLoaded } from 'react-redux-firebase'
 import { NavLink } from 'react-router-dom'
 import convertToObj from '../../firebase/convert'
 import useRouteName from '../../hooks/useRouteNames'
-import getCurrentSelectedLeague from '../../state/action/settingsAction'
+import getCurrentSelectedLeague from '../../state/action/leagueAction'
 import { AppState } from '../../state/reducer'
 import { AvailableLeague, Settings } from '../../state/types/settings'
 

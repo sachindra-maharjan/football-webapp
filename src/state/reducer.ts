@@ -4,7 +4,7 @@ import { firestoreReducer, FirestoreReducer } from 'redux-firestore'
 import { TeamStanding } from './types/standings.types'
 import { CurrentLeague, League, LeagueSeason } from './types/league.types'
 import { Settings } from './types/settings'
-import currentSelectedLeague from './reducers/settingsReducer'
+import currentSelectedLeague from './reducers/leagueReducer'
 
 interface FirestoreSchema {
 	settings: Settings
