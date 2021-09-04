@@ -6,10 +6,21 @@ const customTabsStyle = createStyles({
 		float: 'left',
 		padding: '10px 10px 10px 0px',
 		lineHeight: '24px',
+		fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+		fontWeight: 300,
 	},
 	cardTitleRTL: {
 		float: 'right',
 		padding: '10px 0px 10px 10px !important',
+	},
+	cardCategory: {
+		color: `rgba(${hexToRgb(whiteColor)},.62)`,
+		margin: '0',
+		fontSize: '14px',
+		marginTop: '0',
+		marginBottom: '0',
+		fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+		fontWeight: 300,
 	},
 	displayNone: {
 		display: 'none !important',
@@ -20,6 +31,8 @@ const customTabsStyle = createStyles({
 		'& $tabRootButton': {
 			fontSize: '0.875rem',
 		},
+		fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+		fontWeight: 300,
 	},
 	tabRootButton: {
 		minHeight: 'unset !important',

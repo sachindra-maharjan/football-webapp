@@ -1,10 +1,10 @@
-import { DateRange } from '@material-ui/icons'
+import { Place } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import React from 'react'
 import Card from '../../component/card/Card'
+import CardBody from '../../component/card/CardBody'
 import CardFooter from '../../component/card/CardFooter'
 import CardHeader from '../../component/card/CardHeader'
-import CardIcon from '../../component/card/CardIcon'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import styles from '../dashboard/Dashboard.styles'
@@ -18,22 +18,24 @@ const Team: React.FC<Props> = () => {
 	return (
 		<div>
 			<GridContainer>
-				<GridItem xs={12} sm={6} md={3}>
-					<Card className=''>
+				<GridItem xs={12} sm={12} md={4}>
+					<Card chart className=''>
 						<CardHeader color='successCardHeader' stats icon className=''>
-							<CardIcon color='successCardHeader' className=''>
+							<div>
 								<img
 									alt=''
 									src='https://cdn.cdnlogo.com/logos/m/68/manchester-united.svg'
 								/>
-							</CardIcon>
-							<p className={classes.cardCategory}>Revenue</p>
-							<h3 className={classes.cardTitle}>$34,245</h3>
+							</div>
 						</CardHeader>
-						<CardFooter stats className=''>
+						<CardBody className=''>
+							<h4 className={classes.cardTitle}>Manchester United</h4>
+							<p className={classes.cardCategory}>Founded: 1878</p>
+							<p className={classes.cardCategory}>Stadium Capacity: 76212</p>
+						</CardBody>
+						<CardFooter className='' chart>
 							<div className={classes.stats}>
-								<DateRange />
-								Last 24 Hours
+								<Place /> Sir Matt Busby Way, Manchester
 							</div>
 						</CardFooter>
 					</Card>

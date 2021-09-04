@@ -21,6 +21,8 @@ const styles = createStyles({
 			fontSize: '14px',
 			marginTop: '0',
 			marginBottom: '0',
+			fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+			fontWeight: 300,
 		},
 		'& a,& a:hover,& a:focus': {
 			color: '#FFFFFF',

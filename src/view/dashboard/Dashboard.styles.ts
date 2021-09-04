@@ -38,10 +38,13 @@ const dashboardStyles = createStyles({
 	cardCategory: {
 		color: grayColor[0],
 		margin: '0',
-		fontSize: '14px',
+		fontSize: '12px',
 		marginTop: '0',
 		paddingTop: '12px',
 		marginBottom: '0',
+		fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+		fontWeight: 300,
+		padding: '3px',
 	},
 	cardCategoryWhite: {
 		color: `rgba(${hexToRgb(whiteColor)},.62)`,
@@ -49,6 +52,9 @@ const dashboardStyles = createStyles({
 		fontSize: '14px',
 		marginTop: '0',
 		marginBottom: '0',
+		fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+		fontWeight: 300,
+		padding: '3px',
 	},
 	cardTitle: {
 		color: grayColor[2],
