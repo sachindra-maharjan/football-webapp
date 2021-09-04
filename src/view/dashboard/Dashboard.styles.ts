@@ -81,16 +81,18 @@ const dashboardStyles = createStyles({
 	},
 	teamBlock: {
 		display: 'inline-block',
-		width: '130px',
+		width: '70%',
+		float: 'left',
 	},
 	scoreBlock: {
 		display: 'inline-block',
 		textAlign: 'right',
-		width: '30px',
+		width: '30%',
+		float: 'right',
 	},
 	venueDivider: {
 		borderTop: `1px solid ${grayColor[10]}`,
-		marginTop: '10px',
+		marginTop: '30px',
 	},
 	venue: {
 		color: grayColor[0],
