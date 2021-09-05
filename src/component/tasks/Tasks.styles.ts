@@ -14,6 +14,16 @@ const tasksStyle = createStyles({
 	tableHead: {
 		padding: '50px',
 	},
+	tableHeadCell: {
+		...defaultFont,
+		padding: '5px',
+		verticalAlign: 'middle',
+		border: 'none',
+		lineHeight: '1.42857143',
+		fontSize: '14px',
+		borderBottom: 'none',
+		fontWeight: 350,
+	},
 	tableRow: {
 		position: 'relative',
 		borderBottom: `1px solid ${grayColor[5]}`,
@@ -72,6 +82,7 @@ const tasksStyle = createStyles({
 	},
 	tableSpacing: {
 		padding: '5px',
+		textAlign: 'center',
 	},
 })
 

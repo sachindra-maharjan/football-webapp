@@ -11,6 +11,7 @@ import DashboardPage from './view/dashboard/Dashboard'
 import TeamPage from './view/team/Team'
 import StandingsPage from './view/standings/Standings'
 import PlayersPage from './view/players/Players'
+import PlayerDetailPage from './view/players/PlayerDetail'
 import StatisticsPage from './view/statistics/Statistics'
 import AnalyticsPage from './view/analytics/Analytics'
 
@@ -42,6 +43,13 @@ const routes = [
 		icon: Person,
 		component: PlayersPage,
 		active: true,
+	},
+	{
+		path: '/playerDetail',
+		name: 'PlayerDetail',
+		icon: Person,
+		component: PlayerDetailPage,
+		active: false,
 	},
 	{
 		path: '/statistics',

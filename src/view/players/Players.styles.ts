@@ -26,7 +26,7 @@ const PlayersStyles = createStyles({
 		minHeight: 'auto',
 		fontWeight: 300,
 		fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-		marginBottom: '3px',
+		marginBottom: '10px',
 		textDecoration: 'none',
 	},
 	cardTitleWhite: {
@@ -59,6 +59,16 @@ const PlayersStyles = createStyles({
 		marginTop: '0',
 		marginBottom: '0',
 		margin: '0',
+	},
+	spacing: {
+		marginTop: '30px',
+		padding: '5px',
+	},
+	spacingBotton: {
+		paddingBottom: '15px',
+	},
+	cardBodyAlign: {
+		textAlign: 'center',
 	},
 })
 

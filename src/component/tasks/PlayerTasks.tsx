@@ -26,14 +26,25 @@ const PlayerTask: React.FC<Props> = ({ title, tasks }) => {
 	return (
 		<div className={classes.tableSpacing}>
 			<Table className={classes.table}>
-				<TableHead>{title}</TableHead>
+				<TableHead>
+					<TableRow className={classes.tableRowNoBorder}>
+						<TableCell align='center' className={classes.tableHeadCell}>
+							{title}
+						</TableCell>
+					</TableRow>
+				</TableHead>
 				<TableBody>
-					{tasks.map(task => (
-						<TableRow className={classes.tableRowNoBorder}>
-							<TableCell width='30%' className={classes.tableCellNoDivider}>
+					{tasks.map((task, k) => (
+						// eslint-disable-next-line react/no-array-index-key
+						<TableRow className={classes.tableRowNoBorder} key={k}>
+							<TableCell
+								align='center'
+								width='30%'
+								className={classes.tableCellNoDivider}
+							>
 								{task.label}
 							</TableCell>
-							<TableCell className={classes.tableCellNoDivider}>
+							<TableCell align='center' className={classes.tableCellNoDivider}>
 								{task.value}
 							</TableCell>
 						</TableRow>
