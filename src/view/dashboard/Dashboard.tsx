@@ -8,7 +8,7 @@ import CustomTabs from '../../component/customTabs/CustomTabs'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import CustomTable from '../../component/table/Table'
-import Tasks from '../../component/tasks/Tasks'
+import Tasks from '../../component/tasks/FixtureTasks'
 
 // core components
 

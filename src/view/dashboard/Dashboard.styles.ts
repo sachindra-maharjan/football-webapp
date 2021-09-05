@@ -19,6 +19,8 @@ const dashboardStyles = createStyles({
 		display: 'inline-flex',
 		fontSize: '12px',
 		lineHeight: '22px',
+		fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+		fontWeight: 300,
 		'& svg': {
 			top: '4px',
 			width: '16px',

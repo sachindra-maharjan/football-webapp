@@ -11,9 +11,16 @@ const tasksStyle = createStyles({
 		marginBottom: '0',
 		overflow: 'visible',
 	},
+	tableHead: {
+		padding: '50px',
+	},
 	tableRow: {
 		position: 'relative',
 		borderBottom: `1px solid ${grayColor[5]}`,
+	},
+	tableRowNoBorder: {
+		position: 'relative',
+		borderBottom: 'none',
 	},
 	tableActions: {
 		display: 'flex',
@@ -28,6 +35,15 @@ const tasksStyle = createStyles({
 		border: 'none',
 		lineHeight: '1.42857143',
 		fontSize: '14px',
+	},
+	tableCellNoDivider: {
+		...defaultFont,
+		padding: '5px',
+		verticalAlign: 'middle',
+		border: 'none',
+		lineHeight: '1.42857143',
+		fontSize: '13px',
+		borderBottom: 'none',
 	},
 	tableCellRight: {
 		textAlign: 'right',
@@ -53,6 +69,9 @@ const tasksStyle = createStyles({
 		backgroundColor: 'transparent',
 		color: dangerColor[0],
 		boxShadow: 'none',
+	},
+	tableSpacing: {
+		padding: '5px',
 	},
 })
 
