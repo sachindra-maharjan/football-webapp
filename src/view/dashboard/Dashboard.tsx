@@ -85,9 +85,6 @@ const dashboard = () => {
 			],
 			storeAs: 'standings',
 		},
-	])
-
-	useFirestoreConnect([
 		{
 			collection: '/football',
 			doc: selectedLeague,

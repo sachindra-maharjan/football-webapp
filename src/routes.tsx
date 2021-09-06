@@ -24,10 +24,10 @@ const routes = [
 		active: true,
 	},
 	{
-		path: '/team',
-		name: 'Team',
-		icon: Group,
-		component: TeamPage,
+		path: '/fixtures',
+		name: 'Fixtures',
+		icon: Assessment,
+		component: StatisticsPage,
 		active: true,
 	},
 	{
@@ -35,6 +35,13 @@ const routes = [
 		name: 'Standings',
 		icon: TableChart,
 		component: StandingsPage,
+		active: true,
+	},
+	{
+		path: '/teams',
+		name: 'Teams',
+		icon: Group,
+		component: TeamPage,
 		active: true,
 	},
 	{
@@ -52,18 +59,11 @@ const routes = [
 		active: false,
 	},
 	{
-		path: '/statistics',
-		name: 'Statistics',
-		icon: Assessment,
-		component: StatisticsPage,
-		active: true,
-	},
-	{
 		path: '/analytics',
 		name: 'Analytics',
 		icon: BubbleChart,
 		component: AnalyticsPage,
-		active: true,
+		active: false,
 	},
 ]
 

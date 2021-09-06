@@ -108,6 +108,10 @@ const dashboardStyles = createStyles({
 		fontSize: '12px',
 		lineHeight: '15px',
 	},
+	teamLogo: {
+		textAlign: 'center',
+		padding: '20px',
+	},
 })
 
 export default dashboardStyles
