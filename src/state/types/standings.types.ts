@@ -3,7 +3,7 @@ export interface StandingStat {
 	goalsAgainst: number
 	goalsFor: number
 	lose: number
-	matchsPlayed: number
+	matchesPlayed: number
 	win: number
 }
 

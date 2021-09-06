@@ -5,12 +5,14 @@ import { TeamStanding } from './types/standings.types'
 import { CurrentLeague, League, LeagueSeason } from './types/league.types'
 import { Settings } from './types/settings'
 import currentSelectedLeague from './reducers/leagueReducer'
+import { Player } from './types/player.types'
 
 interface FirestoreSchema {
 	settings: Settings
 	league: League
 	seasons: LeagueSeason
 	standings: TeamStanding
+	topScorers: Player
 	[name: string]: any
 }
 

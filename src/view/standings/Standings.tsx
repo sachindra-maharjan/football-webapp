@@ -94,7 +94,7 @@ const Standings: React.FC<Props> = () => {
 	// Firestore
 	useFirestoreConnect([
 		{
-			collection: '/football-leagues',
+			collection: '/football',
 			doc: selectedLeague,
 			subcollections: [
 				{
@@ -123,7 +123,7 @@ const Standings: React.FC<Props> = () => {
 				const team: string[] = [
 					t.rank.toString(),
 					t.teamName.toString(),
-					all.matchsPlayed.toString(),
+					all.matchesPlayed.toString(),
 					(all.win * 3 + all.draw).toString(),
 					all.win.toString(),
 					all.draw.toString(),
