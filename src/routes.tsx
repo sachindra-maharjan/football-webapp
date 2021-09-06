@@ -45,8 +45,8 @@ const routes = [
 		active: true,
 	},
 	{
-		path: '/playerDetail',
-		name: 'PlayerDetail',
+		path: '/player',
+		name: 'PlayerStat',
 		icon: Person,
 		component: PlayerDetailPage,
 		active: false,

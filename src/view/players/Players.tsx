@@ -25,7 +25,7 @@ const Players = () => {
 						md={4}
 						onClick={() =>
 							history.push({
-								pathname: '/playerDetail',
+								pathname: '/player',
 								state: { playerId: 'player1' },
 							})
 						}
@@ -38,7 +38,7 @@ const Players = () => {
 						md={4}
 						onClick={() =>
 							history.push({
-								pathname: '/playerDetail',
+								pathname: '/player',
 								state: { playerId: 'player1' },
 							})
 						}
@@ -51,7 +51,7 @@ const Players = () => {
 						md={4}
 						onClick={() =>
 							history.push({
-								pathname: '/playerDetail',
+								pathname: '/player',
 								state: { playerId: 'player1' },
 							})
 						}

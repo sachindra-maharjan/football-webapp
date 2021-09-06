@@ -41,7 +41,9 @@ const Sidebar: React.FC<Props> = ({
 
 	// verifies if routeName is the one active (in browser input)
 	function activeRoute(routeName: string): boolean {
-		return location.pathname === routeName
+		return (
+			location.pathname === routeName || routeName.includes(location.pathname)
+		) 
 	}
 
 	const links = (
