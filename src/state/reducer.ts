@@ -6,7 +6,7 @@ import { CurrentLeague, League, LeagueSeason } from './types/league.types'
 import { Settings } from './types/settings'
 import currentSelectedLeague from './reducers/leagueReducer'
 import { Player } from './types/player.types'
-import { Squad, Team } from './types/team.types'
+import { SquadMember, Team } from './types/team.types'
 
 interface FirestoreSchema {
 	settings: Settings
@@ -15,7 +15,7 @@ interface FirestoreSchema {
 	standings: TeamStanding
 	topScorers: Player
 	teams: Team
-	squad: Squad
+	squad: SquadMember
 	[name: string]: any
 }
 

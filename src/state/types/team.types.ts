@@ -13,7 +13,9 @@ export interface Team {
 	venueSurface: string
 }
 
-export interface Squad extends Player {
+export interface SquadMember extends Player {
 	minutesPlayed: number
 	gamesPlayed: number
+	playerName: string
+	number: number
 }

@@ -103,10 +103,10 @@ const App = () => {
 
 	useEffect(() => {
 		if (isLoaded(settings)) {
-			setCurrentLeague(settings.default.toString())
+			setCurrentLeague(`${settings.default}`)
 		}
 	}, [settings])
-
+	
 	return (
 		<div className={classes.wrapper}>
 			<Sidebar

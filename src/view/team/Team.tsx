@@ -22,7 +22,6 @@ const Team: React.FC<Props> = () => {
 	let leagueId = '#'
 
 	// Selectors
-	// Selectors
 	const { selectedLeague } = useSelector(
 		(state: AppState) => state.selectedLeague
 	)

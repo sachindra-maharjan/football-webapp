@@ -9,12 +9,14 @@ import GridItem from '../../component/grid/GridItem'
 import CardHeader from '../../component/card/CardHeader'
 import styles from './Players.styles'
 import Data from '../../component/tasks/PlayerTasks'
+import { SquadMember } from '../../state/types/team.types'
 import PlayerCard from './PlayerCard'
+// import PlayerCard from './PlayerCard'
 
 interface Props {}
 
 interface HistoryState {
-	playerId: string
+	squadMember: SquadMember
 }
 
 const useStyles = makeStyles(styles)
@@ -25,7 +27,7 @@ const PlayerDetail: React.FC<Props> = () => {
 	const history = useHistory()
 
 	const historyState = location.state as HistoryState
-	console.log(historyState.playerId)
+
 	const data = [
 		{ label: 'Goal', value: '5' },
 		{ label: 'Goal', value: '5' },
@@ -48,7 +50,7 @@ const PlayerDetail: React.FC<Props> = () => {
 			<div className={classes.spacing}>
 				<GridContainer>
 					<GridItem xs={12} sm={12} md={4}>
-						<PlayerCard />
+						<PlayerCard squadMember={historyState.squadMember} />
 					</GridItem>
 					<GridItem xs={12} sm={12} md={8}>
 						<Card className=''>
