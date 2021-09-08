@@ -41,6 +41,11 @@ export interface CurrentLeague {
 	selectedLeagueLoaded: boolean
 }
 
+export interface CurrentTeam {
+	team: string
+	loaded: boolean
+}
+
 // States
 export interface LeagueSeasonState {
 	seasons: LeagueSeason[]

@@ -1,10 +1,11 @@
-import { CurrentLeague, LeagueSeason } from './types/league.types'
+import { CurrentLeague, CurrentTeam, LeagueSeason } from './types/league.types'
 import { TeamStanding } from './types/standings.types'
 
 export enum ActionType {
 	GET_SEASONS = 'seasons',
 	GET_STANDINGS = 'standings',
 	GET_SELECTED_LEAGUE = 'selectedLeague',
+	GET_SELECTED_TEAM = 'selectedTeam',
 }
 
 export enum AppSettingType {
@@ -27,7 +28,13 @@ export interface GetSelectedLeagueAction {
 	payload: CurrentLeague
 }
 
+export interface GetSelectedTeamAction {
+	type: typeof ActionType.GET_SELECTED_TEAM
+	payload: CurrentTeam
+}
+
 export type Action =
 	| GetLeagueSeasonAction
 	| GetStandingsAction
 	| GetSelectedLeagueAction
+	| GetSelectedTeamAction
