@@ -1,11 +1,17 @@
 import { createStyles, makeStyles } from '@material-ui/styles'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
+
 import Card from '../../component/card/Card'
 import CardBody from '../../component/card/CardBody'
 import CardHeader from '../../component/card/CardHeader'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import Table from '../../component/table/Table'
+import convertToObj from '../../firebase/convert'
+import { AppState } from '../../state/reducer'
+import { StandingStat } from '../../state/types/standings.types'
 
 const styles = createStyles({
 	cardCategoryWhite: {
@@ -15,6 +21,8 @@ const styles = createStyles({
 			fontSize: '14px',
 			marginTop: '0',
 			marginBottom: '0',
+			fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+			fontWeight: 300,
 		},
 		'& a,& a:hover,& a:focus': {
 			color: '#FFFFFF',
@@ -44,29 +52,125 @@ const useStyles = makeStyles(styles)
 const Standings: React.FC<Props> = () => {
 	const classes = useStyles()
 
+	let leagueId = '#'
+	let currentSeason = ''
+	let currentLeagueName = ''
+
+	// States
+	const [standings, setStandings] = useState<string[][]>([])
+	const [leagueName, setLeagueName] = useState<string>('')
+	const [leagueSeason, setLeagueSeason] = useState<string>('')
+
+	// Selectors
+	const league = useSelector(
+		(state: AppState) => state.firestore.ordered.league
+	)
+
+	const season = useSelector(
+		(state: AppState) => state.firestore.ordered.seasons
+	)
+
+	const selectTeamStandings = (state: AppState) =>
+		state.firestore.ordered.standings
+
+	const teamStandings = useSelector((state: AppState) =>
+		selectTeamStandings(state)
+	)
+
+	const { selectedLeague } = useSelector(
+		(state: AppState) => state.selectedLeague
+	)
+
+	if (isLoaded(league) && league.length > 0) {
+		currentLeagueName = league[0].name.toString()
+	}
+
+	if (isLoaded(season)) {
+		leagueId = season[0].id.toString()
+		currentSeason = season[0].season.toString()
+		currentLeagueName = 'Premier League'
+	}
+
+	// Firestore
+	useFirestoreConnect([
+		{
+			collection: '/football',
+			doc: selectedLeague,
+			subcollections: [
+				{
+					collection: '/leagues',
+					doc: leagueId,
+					subcollections: [
+						{ collection: 'standings', orderBy: ['rank', 'asc'] },
+					],
+				},
+			],
+			storeAs: 'standings',
+		},
+	])
+
+	// React Hooks
+	useEffect(() => {
+		setLeagueName(currentLeagueName)
+		setLeagueSeason(currentSeason)
+	}, [currentLeagueName, currentSeason])
+
+	useEffect(() => {
+		if (isLoaded(teamStandings)) {
+			const allTeams: string[][] = []
+			teamStandings.forEach(t => {
+				const all = convertToObj<StandingStat>(t.all)
+				const team: string[] = [
+					t.rank.toString(),
+					t.teamName.toString(),
+					all.matchesPlayed.toString(),
+					(all.win * 3 + all.draw).toString(),
+					all.win.toString(),
+					all.draw.toString(),
+					all.lose.toString(),
+					all.goalsFor.toString(),
+					all.goalsAgainst.toString(),
+					(all.goalsFor - all.goalsAgainst).toString(),
+					t.forme.toString(),
+				]
+				allTeams.push(team)
+			})
+			setStandings(allTeams)
+		}
+	}, [teamStandings])
+
 	return (
 		<GridContainer>
 			<GridItem xs={12} sm={12} md={12}>
-				<Card className=''>
-					<CardHeader color='primaryCardHeader' className=''>
-						<h4 className={classes.cardTitleWhite}>Premier League</h4>
-						<p className={classes.cardCategoryWhite}>Week 12</p>
-					</CardHeader>
-					<CardBody className=''>
-						<Table
-							tableHeaderColor='primary'
-							tableHead={['Pos', 'Team', 'Points', 'Goal Diff']}
-							tableData={[
-								['Dakota Rice', 'Niger', 'Oud-Turnhout', '$36,738'],
-								['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-								['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-								['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-								['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-								['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-							]}
-						/>
-					</CardBody>
-				</Card>
+				{!isLoaded(teamStandings) || standings.length === 0 ? (
+					<div>Loading...</div>
+				) : (
+					<Card className=''>
+						<CardHeader color='primaryCardHeader' className=''>
+							<h4 className={classes.cardTitleWhite}>{leagueName}</h4>
+							<p className={classes.cardCategoryWhite}>{leagueSeason}</p>
+						</CardHeader>
+						<CardBody className=''>
+							<Table
+								tableHeaderColor='primary'
+								tableHead={[
+									'Pos',
+									'Team',
+									'Played',
+									'Points',
+									'Won',
+									'Drawn',
+									'Lost',
+									'GF',
+									'GA',
+									'GD',
+									'Form',
+								]}
+								tableData={standings}
+							/>
+						</CardBody>
+					</Card>
+				)}
 			</GridItem>
 		</GridContainer>
 	)

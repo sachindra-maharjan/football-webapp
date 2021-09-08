@@ -6,14 +6,14 @@ const appStyles = (theme: any) =>
 		wrapper: {
 			position: 'relative',
 			top: '0',
-			height: '100vh',
+			height: '98vh',
 		},
 		mainPanel: {
 			[theme.breakpoints.up('md')]: {
 				width: `calc(100% - ${drawerWidth}px)`,
 			},
 			overflow: 'auto',
-			position: 'relative',
+			position: 'sticky',
 			float: 'right',
 			...transition,
 			maxHeight: '100%',
@@ -22,7 +22,7 @@ const appStyles = (theme: any) =>
 		},
 		content: {
 			marginTop: '70px',
-			padding: '30px 15px',
+			padding: '15px',
 			minHeight: 'calc(100vh - 123px)',
 		},
 		container,
