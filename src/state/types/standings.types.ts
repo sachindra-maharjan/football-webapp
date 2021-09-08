@@ -3,7 +3,7 @@ export interface StandingStat {
 	goalsAgainst: number
 	goalsFor: number
 	lose: number
-	matchsPlayed: number
+	matchesPlayed: number
 	win: number
 }
 
@@ -21,7 +21,6 @@ export interface TeamStanding {
 }
 
 // States
-
 export interface StandingsState {
 	teamStandings: TeamStanding[]
 	loaded: boolean

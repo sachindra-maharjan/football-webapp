@@ -1,20 +1,18 @@
-import { LeagueAction, LeagueActionType } from '../types'
-import { LeagueSeasonState } from '../types/league.types'
+import { Action, ActionType } from '../types'
+import { CurrentLeague } from '../types/league.types'
 
-const initialState: LeagueSeasonState = {
-	seasons: [],
-	seasonsLoaded: false,
+const initialState: CurrentLeague = {
+	selectedLeague: 'premierleague',
+	selectedLeagueLoaded: false,
 }
 
-export default (state = initialState, action: LeagueAction) => {
+export const currentSelectedLeague = (state = initialState, action: Action) => {
 	switch (action.type) {
-		case LeagueActionType.GET_SEASONS:
-			return {
-				...state,
-				seasons: action.payload,
-				seasonsLoaded: true,
-			}
+		case ActionType.GET_SELECTED_LEAGUE:
+			return action.payload
 		default:
 			return state
 	}
 }
+
+export default currentSelectedLeague

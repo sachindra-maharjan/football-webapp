@@ -11,6 +11,7 @@ import DashboardPage from './view/dashboard/Dashboard'
 import TeamPage from './view/team/Team'
 import StandingsPage from './view/standings/Standings'
 import PlayersPage from './view/players/Players'
+import PlayerDetailPage from './view/players/PlayerDetail'
 import StatisticsPage from './view/statistics/Statistics'
 import AnalyticsPage from './view/analytics/Analytics'
 
@@ -23,10 +24,10 @@ const routes = [
 		active: true,
 	},
 	{
-		path: '/team',
-		name: 'Team',
-		icon: Group,
-		component: TeamPage,
+		path: '/fixtures',
+		name: 'Fixtures',
+		icon: Assessment,
+		component: StatisticsPage,
 		active: true,
 	},
 	{
@@ -37,6 +38,13 @@ const routes = [
 		active: true,
 	},
 	{
+		path: '/teams',
+		name: 'Teams',
+		icon: Group,
+		component: TeamPage,
+		active: true,
+	},
+	{
 		path: '/players',
 		name: 'Players',
 		icon: Person,
@@ -44,18 +52,18 @@ const routes = [
 		active: true,
 	},
 	{
-		path: '/statistics',
-		name: 'Statistics',
-		icon: Assessment,
-		component: StatisticsPage,
-		active: true,
+		path: '/player',
+		name: 'PlayerStat',
+		icon: Person,
+		component: PlayerDetailPage,
+		active: false,
 	},
 	{
 		path: '/analytics',
 		name: 'Analytics',
 		icon: BubbleChart,
 		component: AnalyticsPage,
-		active: true,
+		active: false,
 	},
 ]
 

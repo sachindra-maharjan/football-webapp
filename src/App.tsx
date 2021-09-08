@@ -1,26 +1,27 @@
 import React, { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
 
-// Material UI
+// State
 import { makeStyles } from '@material-ui/core/styles'
 
-// import PerfectScrollbar from 'perfect-scrollbar'
-import routes from './routes'
+import { useSelector } from 'react-redux'
+import { AppState } from './state/reducer'
 
-// Images
-import bgImage from './asset/img/sidebar-5.jpg'
-import logo from './asset/img/reactlogo.png'
+// Material UI
 
 // Styles
 import styles from './App.styles'
+
+import routes from './routes'
 
 // Components
 import Sidebar from './component/sidebar/Sidebar'
 import NavBar from './component/navbar/NavBar'
 
-import { RootState } from './state'
-import getCurrentSeason from './state/actions/leagueActions'
+// Image
+import logo from './asset/img/reactlogo.png'
+import bgImage from './asset/img/sidebar-5.jpg'
 
 // let ps: PerfectScrollbar
 const switchRoutes = (
@@ -44,21 +45,68 @@ const App = () => {
 	const [image] = React.useState(bgImage)
 	const [color] = React.useState('blue')
 	const [mobileOpen, setMobileOpen] = React.useState(false)
+	const [currentLeague, setCurrentLeague] = React.useState('premierleague')
+	const year = new Date().getFullYear() - 1
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
 
-	const { seasonsLoaded } = useSelector((state: RootState) => state.league)
+	// Selectors
+	const { selectedLeague, selectedLeagueLoaded } = useSelector(
+		(state: AppState) => state.selectedLeague
+	)
+	const settings = useSelector(
+		(state: AppState) => state.firestore.data.settings
+	)
 
-	const dispatch = useDispatch()
+	// Firestore
+	useFirestoreConnect([
+		{
+			collection: '/appSettings',
+			doc: 'league',
+			storeAs: 'settings',
+		},
+	])
+
+	useFirestoreConnect([
+		{
+			collection: '/football-leagues',
+			doc: currentLeague,
+			storeAs: 'league',
+		},
+	])
+
+	// Get Default Current Season
+	useFirestoreConnect([
+		{
+			collection: '/football-leagues',
+			doc: currentLeague,
+			subcollections: [
+				{
+					collection: 'leagues',
+					where: ['season', '>=', year.toString()],
+					orderBy: ['season', 'desc'],
+					limit: 1,
+				},
+			],
+			storeAs: `seasons`,
+		},
+	])
+
+	// React Hooks
+	useEffect(() => {
+		if (selectedLeagueLoaded) {
+			setCurrentLeague(selectedLeague)
+		}
+	}, [selectedLeague])
 
 	useEffect(() => {
-		if (!seasonsLoaded) {
-			dispatch(getCurrentSeason())
+		if (isLoaded(settings)) {
+			setCurrentLeague(`${settings.default}`)
 		}
-	}, [])
-
+	}, [settings])
+	
 	return (
 		<div className={classes.wrapper}>
 			<Sidebar

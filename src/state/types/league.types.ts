@@ -1,11 +1,19 @@
 // Interfaces
 
+export interface League {
+	country: string
+	countryCode: string
+	logo: string
+	name: string
+	type: string
+}
+
 export interface LeagueSeason {
 	leagueId: number
-	leageuName: string
 	season: string
 	seasonStart: Date
 	seasonEnd: Date
+	coverage: LeagueCoverage
 }
 
 export interface LeagueCoverageFixtures {
@@ -23,8 +31,19 @@ export interface LeagueCoverage {
 	fixtures: LeagueCoverageFixtures
 }
 
+export interface Seasons {
+	seasons: LeagueSeason
+	done: boolean
+}
+
+export interface CurrentLeague {
+	selectedLeague: string
+	selectedLeagueLoaded: boolean
+}
+
 // States
 export interface LeagueSeasonState {
 	seasons: LeagueSeason[]
 	seasonsLoaded: boolean
 }
+
