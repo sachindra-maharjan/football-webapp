@@ -66,6 +66,7 @@ export interface Player {
 	position: string
 	nationality: string
 	goals: Goals
+	fouls: Fouls
 	dribbles: Dribbles
 	duels: Duels
 	games: Games
@@ -74,4 +75,5 @@ export interface Player {
 	cards: Cards
 	penalty: Penalty
 	tackles: Tackles
+	logo: string
 }

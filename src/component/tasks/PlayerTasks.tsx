@@ -28,7 +28,7 @@ const PlayerTask: React.FC<Props> = ({ title, tasks }) => {
 			<Table className={classes.table}>
 				<TableHead>
 					<TableRow className={classes.tableRowNoBorder}>
-						<TableCell align='center' className={classes.tableHeadCell}>
+						<TableCell align='left' className={classes.tableHeadCell}>
 							{title}
 						</TableCell>
 					</TableRow>
@@ -38,8 +38,8 @@ const PlayerTask: React.FC<Props> = ({ title, tasks }) => {
 						// eslint-disable-next-line react/no-array-index-key
 						<TableRow className={classes.tableRowNoBorder} key={k}>
 							<TableCell
-								align='center'
-								width='30%'
+								align='right'
+								width='50%'
 								className={classes.tableCellNoDivider}
 							>
 								{task.label}

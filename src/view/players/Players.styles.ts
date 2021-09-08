@@ -70,6 +70,9 @@ const PlayersStyles = createStyles({
 	cardBodyAlign: {
 		textAlign: 'center',
 	},
+	badgeSpacing: {
+		paddingRight: '15px',
+	},
 })
 
 export default PlayersStyles

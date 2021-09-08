@@ -27,11 +27,68 @@ const PlayerDetail: React.FC<Props> = () => {
 	const history = useHistory()
 
 	const historyState = location.state as HistoryState
+	const stat = historyState.squadMember
 
-	const data = [
-		{ label: 'Goal', value: '5' },
-		{ label: 'Goal', value: '5' },
-		{ label: 'Goal', value: '5' },
+	const getData = (key: string, value: number) => {
+		return { label: key, value: value ? `${value}` : '0' }
+	}
+
+	const games = [
+		getData('Played', stat.gamesPlayed),
+		getData('Minutes Played', stat.minutesPlayed),
+	]
+
+	const goals = [
+		getData('Total', stat.goals.total),
+		getData('Assists', stat.goals.assists),
+		getData('Saves', stat.goals.saves),
+		getData('Conceded', stat.goals.conceded),
+	]
+
+	const penalty = [
+		getData('Success', stat.penalty.success),
+		getData('Won', stat.penalty.won),
+		getData('Saved', stat.penalty.saved),
+		getData('Missed', stat.penalty.missed),
+		getData('Committed', stat.penalty.committed),
+	]
+
+	const shots = [
+		getData('Total', stat.shots.total),
+		getData('On Target', stat.shots.on),
+	]
+
+	const fouls = [
+		getData('Drawn', stat.fouls.drawn),
+		getData('Committed', stat.fouls.committed),
+	]
+
+	const tackles = [
+		getData('Total', stat.tackles.total),
+		getData('Blocks', stat.tackles.blocks),
+		getData('Interceptions', stat.tackles.interceptions),
+	]
+
+	const duels = [
+		getData('Total', stat.duels.total),
+		getData('Won', stat.duels.won),
+	]
+
+	const passes = [
+		getData('Total', stat.passes.total),
+		getData('Key', stat.passes.key),
+		getData('Accuracy', stat.passes.accuracy),
+	]
+
+	const dribbles = [
+		getData('Attempt', stat.dribbles.attempt),
+		getData('Past', stat.dribbles.past),
+		getData('Success', stat.dribbles.success),
+	]
+
+	const cards = [
+		getData('Yellow', stat.cards.yellow),
+		getData('Red', stat.cards.red),
 	]
 
 	return (
@@ -56,21 +113,41 @@ const PlayerDetail: React.FC<Props> = () => {
 						<Card className=''>
 							<CardHeader className='' color='primaryCardHeader'>
 								<h4 className={classes.cardTitleWhite}>Statistics</h4>
-								<p className={classes.cardCategoryWhite}>2020</p>
+								{/* <p className={classes.cardCategoryWhite}>2020</p> */}
 							</CardHeader>
 							<CardBody className=''>
 								<GridContainer>
 									<GridItem xs={12} sm={12} md={6}>
-										<Data title='Fouls' tasks={data} />
+										<Data title='Matches' tasks={games} />
+									</GridItem>
+								</GridContainer>
+								<GridContainer>
+									<GridItem xs={12} sm={12} md={6}>
+										<Data title='Goals' tasks={goals} />
 									</GridItem>
 									<GridItem xs={12} sm={12} md={6}>
-										<Data title='Fouls' tasks={data} />
+										<Data title='Penalty' tasks={penalty} />
 									</GridItem>
 									<GridItem xs={12} sm={12} md={6}>
-										<Data title='Fouls' tasks={data} />
+										<Data title='Passes' tasks={passes} />
 									</GridItem>
 									<GridItem xs={12} sm={12} md={6}>
-										<Data title='Fouls' tasks={data} />
+										<Data title='Dribbles' tasks={dribbles} />
+									</GridItem>
+									<GridItem xs={12} sm={12} md={6}>
+										<Data title='Shots' tasks={shots} />
+									</GridItem>
+									<GridItem xs={12} sm={12} md={6}>
+										<Data title='Duels' tasks={duels} />
+									</GridItem>
+									<GridItem xs={12} sm={12} md={6}>
+										<Data title='Tackles' tasks={tackles} />
+									</GridItem>
+									<GridItem xs={12} sm={12} md={6}>
+										<Data title='Fouls' tasks={fouls} />
+									</GridItem>
+									<GridItem xs={12} sm={12} md={6}>
+										<Data title='Cards' tasks={cards} />
 									</GridItem>
 								</GridContainer>
 							</CardBody>
