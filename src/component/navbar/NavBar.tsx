@@ -16,6 +16,7 @@ import MenuBar from '../menu/Menu'
 
 interface Props {
 	color: string
+	// eslint-disable-next-line react/no-unused-prop-types
 	handleDrawerToggle: () => void
 }
 

@@ -2,7 +2,7 @@ export interface Fixture {
 	fixtureId: string
 	leagueId: string
 	eventDate: Date
-	eventTimeStamp: number
+	eventTimestamp: number
 	venue: string
 	status: string
 	shortStatus: string
