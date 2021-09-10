@@ -6,10 +6,13 @@ const initialState: CurrentLeague = {
 	selectedLeagueLoaded: false,
 }
 
-export const currentSelectedLeague = (state = initialState, action: Action) => {
+export const currentSelectedLeague = (
+	state = initialState,
+	action: Action
+): CurrentLeague => {
 	switch (action.type) {
 		case ActionType.GET_SELECTED_LEAGUE:
-			return action.payload
+			return action.payload as CurrentLeague
 		default:
 			return state
 	}

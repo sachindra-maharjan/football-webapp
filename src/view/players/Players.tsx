@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, makeStyles, Select } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
@@ -10,12 +10,14 @@ import PlayerCard from './PlayerCard'
 import { AppState } from '../../state/reducer'
 import convertToObj from '../../firebase/convert'
 import { SquadMember } from '../../state/types/team.types'
+import getCurrentSelectedTeam from '../../state/action/teamActions'
 
 const useStyles = makeStyles(styles)
 
 const Players = () => {
 	const classes = useStyles()
 	const history = useHistory()
+	const dispatch = useDispatch()
 
 	// React state
 	const [teamState, setTeamState] = useState<{
@@ -30,6 +32,8 @@ const Players = () => {
 	const { selectedLeague } = useSelector(
 		(state: AppState) => state.selectedLeague
 	)
+	const selectedTeam = useSelector((state: AppState) => state.selectedTeam)
+
 	const season = useSelector(
 		(state: AppState) => state.firestore.ordered.seasons
 	)
@@ -45,6 +49,10 @@ const Players = () => {
 			[name]: event.target.value,
 		})
 	}
+
+	useEffect(() => {
+		dispatch(getCurrentSelectedTeam(teamState.id))
+	}, [teamState])
 
 	let leagueId = '#'
 	if (isLoaded(season)) {
@@ -91,11 +99,12 @@ const Players = () => {
 	])
 
 	useEffect(() => {
-		if (isLoaded(teams) && teams.length > 0)
+		if (isLoaded(teams) && teams.length > 0) {
 			setTeamState({
 				...teamState,
-				id: `${teams[0].id}`,
+				id: selectedTeam.loaded ? selectedTeam.team : `${teams[0].id}`,
 			})
+		}
 	}, [teams])
 
 	if (!isLoaded(teams) || !isLoaded(squad)) {
@@ -124,8 +133,16 @@ const Players = () => {
 							id: 'outlined-age-native-simple',
 						}}
 					>
+						<option>Select Team</option>
 						{teams.map(t => {
-							return <option value={`${t.id}`}>{t.name}</option>
+							return (
+								<option
+									selected={selectedTeam.team === `${t.id}`}
+									value={`${t.id}`}
+								>
+									{t.name}
+								</option>
+							)
 						})}
 					</Select>
 				</FormControl>

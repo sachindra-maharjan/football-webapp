@@ -12,7 +12,7 @@ import TeamPage from './view/team/Team'
 import StandingsPage from './view/standings/Standings'
 import PlayersPage from './view/players/Players'
 import PlayerDetailPage from './view/players/PlayerDetail'
-import StatisticsPage from './view/statistics/Statistics'
+import FixturesPage from './view/fixtures/Fixtures'
 import AnalyticsPage from './view/analytics/Analytics'
 
 const routes = [
@@ -27,7 +27,7 @@ const routes = [
 		path: '/fixtures',
 		name: 'Fixtures',
 		icon: Assessment,
-		component: StatisticsPage,
+		component: FixturesPage,
 		active: true,
 	},
 	{
