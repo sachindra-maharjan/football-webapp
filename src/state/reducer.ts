@@ -13,6 +13,7 @@ import currentSelectedLeague from './reducers/leagueReducer'
 import { Player } from './types/player.types'
 import { SquadMember, Team } from './types/team.types'
 import currentSelectedTeam from './reducers/teamReducer'
+import { Fixture } from './types/fixtures.types'
 
 interface FirestoreSchema {
 	settings: Settings
@@ -22,6 +23,7 @@ interface FirestoreSchema {
 	topScorers: Player
 	teams: Team
 	squad: SquadMember
+	fixtures: Fixture
 	[name: string]: any
 }
 
