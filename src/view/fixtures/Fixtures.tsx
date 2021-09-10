@@ -8,21 +8,35 @@ import { Fixture } from '../../state/types/fixtures.types'
 
 const Fixtures = () => {
 	// Selectors
-	const fixture = useSelector(
+	const fixtures = useSelector(
 		(state: AppState) => state.firestore.ordered.fixtures
 	)
-
+	const timestampMap = new Map<string, Fixture[]>()	
 	useEffect(() => {
-		if (isLoaded(fixture) && fixture.length > 0) {
-			const f = convertToObj<Fixture>(fixture[0])
-			const d: Date = f.eventDate
-			console.log(`FixtureId:${f.fixtureId}  Date1: ${d}`)
+		if (isLoaded(fixtures) && fixtures.length > 0) {
+			fixtures.forEach(f => {
+				const fixture = convertToObj<Fixture>(f)
+				const date: string = new Date(fixture.eventTimestamp*1000).toDateString()
+				const  eventFixtures = timestampMap.get(date)
+				if(eventFixtures && eventFixtures.length > 0){
+					eventFixtures.push(fixture)
+				}else {
+					const newFixtures: Fixture[] = [fixture]
+					timestampMap.set(date, newFixtures)	
+				}
+			})
 		}
+		
+		Array.from(timestampMap.entries()).forEach(entry => {
+			console.log(`key: ${entry[0]} values: ${entry[1].length}`)
+		})
+	
 	})
 
-	const pastDate = new Date()
-	pastDate.setDate(pastDate.getDate() - 3)
-	console.log(`pastDate${pastDate.toISOString()}`)
+	// const pastDate = new Date()
+	// pastDate.setDate(pastDate.getDate() - 3)
+	// console.log(`pastDate${pastDate.toISOString()}`)
+	// console.log(fixture)
 	// Firestore Hooks
 	useFirestoreConnect([
 		{
@@ -36,8 +50,8 @@ const Fixtures = () => {
 						{
 							collection: 'fixtures',
 							where: [
-								['fixtureId', '==', 592145],
-								['eventTimestamp', '==', 1611165600],
+								['eventTimestamp', '>=', 1606780800],
+								['eventTimestamp', '<=', 1609459199],
 							],
 						},
 					],
