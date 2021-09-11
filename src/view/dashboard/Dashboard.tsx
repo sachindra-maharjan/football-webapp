@@ -10,7 +10,6 @@ import CustomTabs from '../../component/customTabs/CustomTabs'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import CustomTable from '../../component/table/Table'
-import Tasks from '../../component/tasks/FixtureTasks'
 import convertToObj from '../../firebase/convert'
 import { AppState } from '../../state/reducer'
 import { Games, Goals } from '../../state/types/player.types'
@@ -21,20 +20,6 @@ import { StandingStat } from '../../state/types/standings.types'
 import styles from './Dashboard.styles'
 
 const useStyles = makeStyles(styles)
-
-const bugs = [
-	{ fixtureId: '1', home: 'Manchester United', away: 'Manchester City' },
-	{ fixtureId: '2', home: 'Manchester United', away: 'Manchester City' },
-	{ fixtureId: '3', home: 'Manchester United', away: 'Manchester City' },
-	{ fixtureId: '4', home: 'Manchester United', away: 'Manchester City' },
-]
-
-const bugs2 = [
-	{ fixtureId: '1', home: 'Chelsea', away: 'Liverpool' },
-	{ fixtureId: '2', home: 'Manchester United', away: 'Manchester City' },
-	{ fixtureId: '3', home: 'Manchester United', away: 'Manchester City' },
-	{ fixtureId: '4', home: 'Manchester United', away: 'Manchester City' },
-]
 
 const dashboard = () => {
 	const classes = useStyles()
@@ -159,7 +144,7 @@ const dashboard = () => {
 					tabs={[
 						{
 							tabName: 'Week 1',
-							tabContent: <Tasks tasks={bugs} />,
+							tabContent: <div>Task</div>,
 						},
 					]}
 				/>
@@ -173,32 +158,12 @@ const dashboard = () => {
 						{
 							tabName: 'Week 1',
 							tabIcon: SportsSoccer,
-							tabContent: <Tasks tasks={bugs} />,
+							tabContent: <div>Task</div>,
 						},
 						{
 							tabName: 'Week 2',
 							tabIcon: SportsSoccer,
-							tabContent: <Tasks tasks={bugs2} />,
-						},
-						{
-							tabName: 'Week10',
-							tabIcon: SportsSoccer,
-							tabContent: <Tasks tasks={bugs} />,
-						},
-						{
-							tabName: 'Week 1',
-							tabIcon: SportsSoccer,
-							tabContent: <Tasks tasks={bugs} />,
-						},
-						{
-							tabName: 'Week 2',
-							tabIcon: SportsSoccer,
-							tabContent: <Tasks tasks={bugs2} />,
-						},
-						{
-							tabName: 'Week10',
-							tabIcon: SportsSoccer,
-							tabContent: <Tasks tasks={bugs} />,
+							tabContent: <div>Task</div>,
 						},
 					]}
 				/>

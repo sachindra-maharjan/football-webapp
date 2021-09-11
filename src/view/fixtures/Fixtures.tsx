@@ -1,66 +1,48 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
-import convertToObj from '../../firebase/convert'
+import { Grid } from '@material-ui/core'
+import React from 'react'
+import FixtureTabs from '../../component/customTabs/FixtureTabs'
+import GridContainer from '../../component/grid/GridContainer'
 
-import { AppState } from '../../state/reducer'
-import { Fixture } from '../../state/types/fixtures.types'
+const currentDate = new Date()
+const currentMonthIndex = currentDate.getMonth() - 7
+currentDate.setFullYear(currentDate.getFullYear() - 1)
+currentDate.setMonth(7)
+
+const fixtureMonths: {
+	tabName: string
+	startTimestamp: number
+	endTimestamp: number
+}[] = []
+
+// eslint-disable-next-line no-plusplus
+for (let i = 1; i <= 12; i++) {
+	const year = currentDate.getFullYear()
+	const month = currentDate.getMonth()
+	const firstDay = new Date(year, month, 1)
+	const lastDay = new Date(year, month + 1, 0)
+
+	fixtureMonths.push({
+		tabName: `${currentDate.toLocaleDateString('default', {
+			month: 'short',
+		})} ${currentDate.getFullYear()}`,
+		startTimestamp: firstDay.getTime() / 1000,
+		endTimestamp: lastDay.getTime() / 1000,
+	})
+	currentDate.setMonth(currentDate.getMonth() + 1)
+}
 
 const Fixtures = () => {
-	// Selectors
-	const fixtures = useSelector(
-		(state: AppState) => state.firestore.ordered.fixtures
+	return (
+		<GridContainer>
+			<Grid xs={12} sm={12} md={12}>
+				<FixtureTabs
+					title=''
+					headerColor='primaryCardHeader'
+					selectedIndex={currentMonthIndex}
+					tabs={fixtureMonths}
+				/>
+			</Grid>
+		</GridContainer>
 	)
-	const timestampMap = new Map<string, Fixture[]>()	
-	useEffect(() => {
-		if (isLoaded(fixtures) && fixtures.length > 0) {
-			fixtures.forEach(f => {
-				const fixture = convertToObj<Fixture>(f)
-				const date: string = new Date(fixture.eventTimestamp*1000).toDateString()
-				const  eventFixtures = timestampMap.get(date)
-				if(eventFixtures && eventFixtures.length > 0){
-					eventFixtures.push(fixture)
-				}else {
-					const newFixtures: Fixture[] = [fixture]
-					timestampMap.set(date, newFixtures)	
-				}
-			})
-		}
-		
-		Array.from(timestampMap.entries()).forEach(entry => {
-			console.log(`key: ${entry[0]} values: ${entry[1].length}`)
-		})
-	
-	})
-
-	// const pastDate = new Date()
-	// pastDate.setDate(pastDate.getDate() - 3)
-	// console.log(`pastDate${pastDate.toISOString()}`)
-	// console.log(fixture)
-	// Firestore Hooks
-	useFirestoreConnect([
-		{
-			collection: '/football',
-			doc: 'premierleague',
-			subcollections: [
-				{
-					collection: '/leagues',
-					doc: 'leagueId_2790',
-					subcollections: [
-						{
-							collection: 'fixtures',
-							where: [
-								['eventTimestamp', '>=', 1606780800],
-								['eventTimestamp', '<=', 1609459199],
-							],
-						},
-					],
-				},
-			],
-			storeAs: 'fixtures',
-		},
-	])
-
-	return <div>Fixtures</div>
 }
 export default Fixtures
