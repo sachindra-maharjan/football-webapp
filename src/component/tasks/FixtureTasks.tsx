@@ -5,6 +5,7 @@ import {
 	Table,
 	TableBody,
 	TableCell,
+	TableHead,
 	TableRow,
 } from '@material-ui/core'
 import classNames from 'classnames'
@@ -32,14 +33,20 @@ const FixtureTasks: React.FC<Props> = ({ fixtures }) => {
 		classes.tableCellRight
 	)
 
+	const getDateString = (time: number): string => {
+		const date = new Date(time)
+		return `${date.toLocaleDateString('en-us', { weekday: 'long' })}, 
+			${date.getDay() + 1} ${date.toLocaleDateString('en-us', {
+			month: 'long',
+		})} ${date.getFullYear()}`
+	}
+
 	useEffect(() => {
 		if (isLoaded(fixtures)) {
 			const map = new Map<string, Fixture[]>()
 			fixtures.forEach(f => {
 				const fixture = convertToObj<Fixture>(f)
-				const date: string = new Date(
-					fixture.eventTimestamp * 1000
-				).toDateString()
+				const date: string = getDateString(fixture.eventTimestamp * 1000)
 				const eventFixtures = map.get(date)
 				if (eventFixtures && eventFixtures.length > 0) {
 					eventFixtures.push(fixture)
@@ -62,19 +69,32 @@ const FixtureTasks: React.FC<Props> = ({ fixtures }) => {
 	return (
 		<Table className={classes.table}>
 			<TableBody>
-				{Array.from(fixtureMap.entries()).map(entry =>
-					entry[1].map(v => (
-						<TableRow key={v.fixtureId} className={classes.tableRow}>
-							<TableCell className={tableCellClassesRight}>
-								{v.homeTeam.teamName}
-							</TableCell>
-							<TableCell className={tableCellCenterClasses}>Vs</TableCell>
-							<TableCell className={tableCellClasses}>
-								{v.awayTeam.teamName}
-							</TableCell>
-						</TableRow>
-					))
-				)}
+				{Array.from(fixtureMap.entries()).map(entry => (
+					<Table>
+						<TableHead>
+							<TableRow className={classes.tableRow}>
+								<TableCell width='39%' />
+								<TableCell className={classes.tableCellTitle}>
+									{entry[0]}
+								</TableCell>
+								<TableCell width='39%' />
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{entry[1].map(v => (
+								<TableRow key={v.fixtureId} className={classes.tableRow}>
+									<TableCell className={tableCellClassesRight}>
+										{v.homeTeam.teamName}
+									</TableCell>
+									<TableCell className={tableCellCenterClasses}>Vs</TableCell>
+									<TableCell className={tableCellClasses}>
+										{v.awayTeam.teamName}
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				))}
 			</TableBody>
 		</Table>
 	)

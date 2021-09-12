@@ -38,6 +38,16 @@ const tasksStyle = createStyles({
 		padding: '12px 8px !important',
 		verticalAlign: 'middle',
 	},
+	tableCellTitle: {
+		...defaultFont,
+		fontWeight: 400,
+		padding: '8px',
+		verticalAlign: 'middle',
+		border: 'none',
+		lineHeight: '1.42857143',
+		fontSize: '14px',
+		textAlign: 'center',
+	},
 	tableCell: {
 		...defaultFont,
 		padding: '8px',
