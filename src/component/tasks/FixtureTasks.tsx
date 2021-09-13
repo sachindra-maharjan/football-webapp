@@ -55,7 +55,9 @@ const FixtureTasks: React.FC<Props> = ({ eventStartTime, eventEndTime }) => {
 
 		const date = new Date(fixture.eventTimestamp * 1000)
 		return `${date.getUTCHours()}:${
-			date.getUTCMinutes() === 0 ? '00' : date.getUTCMinutes()
+			date.getUTCMinutes() / 10 < 1
+				? `0${date.getUTCMinutes()}`
+				: date.getUTCMinutes()
 		}`
 	}
 
@@ -136,7 +138,11 @@ const FixtureTasks: React.FC<Props> = ({ eventStartTime, eventEndTime }) => {
 										</TableCell>
 										<TableCell className={tableCellCenterClasses}>
 											<div className={classes.score}>{getScore(v)}</div>
-											<div>{v.statusShort ? v.statusShort : ''}</div>
+											<div>
+												{v.statusShort && v.statusShort !== 'NS'
+													? v.statusShort
+													: ''}
+											</div>
 										</TableCell>
 										<TableCell className={tableCellClasses}>
 											{v.awayTeam.teamName}

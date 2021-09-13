@@ -1,12 +1,11 @@
 import { makeStyles } from '@material-ui/core'
-import { SportsSoccer } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
 import Card from '../../component/card/Card'
 import CardBody from '../../component/card/CardBody'
 import CardHeader from '../../component/card/CardHeader'
-import CustomTabs from '../../component/customTabs/CustomTabs'
+import FixtureTabs from '../../component/customTabs/FixtureTabs'
 import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import CustomTable from '../../component/table/Table'
@@ -18,6 +17,45 @@ import { StandingStat } from '../../state/types/standings.types'
 // core components
 
 import styles from './Dashboard.styles'
+
+const fixtureWeeks: {
+	tabName: string
+	startTimestamp: number
+	endTimestamp: number
+}[] = []
+
+const getDaysInMonth = (year: number, month: number): number => {
+	return new Date(year, month, 0).getDate()
+}
+
+const currentDate = new Date()
+currentDate.setFullYear(currentDate.getFullYear() - 1)
+
+const totalDays = getDaysInMonth(
+	currentDate.getFullYear(),
+	currentDate.getMonth()
+)
+const totalWeeks = Math.ceil(totalDays / 7)
+const currentWeek = Math.ceil(currentDate.getDate() / 7)
+
+// eslint-disable-next-line no-plusplus
+for (let i = 0; i < totalWeeks; i++) {
+	const year = currentDate.getFullYear()
+	const month = currentDate.getMonth()
+	const lastDay = (i + 1) * 7
+	const firstDayInAWeek = new Date(year, month, i * 7 + 1)
+	const lastDayInAWeek = new Date(
+		year,
+		month,
+		lastDay > totalDays ? totalDays - lastDay : lastDay
+	)
+
+	fixtureWeeks.push({
+		tabName: `Week ${i + 1}`,
+		startTimestamp: firstDayInAWeek.getTime() / 1000,
+		endTimestamp: lastDayInAWeek.getTime() / 1000,
+	})
+}
 
 const useStyles = makeStyles(styles)
 
@@ -137,42 +175,18 @@ const dashboard = () => {
 	return (
 		<GridContainer>
 			<GridItem xs={12} sm={12} md={6}>
-				<CustomTabs
+				<FixtureTabs
 					title='Fixtures'
 					headerColor='successCardHeader'
-					selectedIndex={0}
-					tabs={[
-						{
-							tabName: 'Week 1',
-							tabContent: <div>Task</div>,
-						},
-					]}
-				/>
-			</GridItem>
-			<GridItem xs={12} sm={12} md={6}>
-				<CustomTabs
-					title='Fixtures'
-					headerColor='infoCardHeader'
-					selectedIndex={2}
-					tabs={[
-						{
-							tabName: 'Week 1',
-							tabIcon: SportsSoccer,
-							tabContent: <div>Task</div>,
-						},
-						{
-							tabName: 'Week 2',
-							tabIcon: SportsSoccer,
-							tabContent: <div>Task</div>,
-						},
-					]}
+					selectedIndex={currentWeek}
+					tabs={fixtureWeeks}
 				/>
 			</GridItem>
 			<GridItem xs={12} sm={12} md={6}>
 				<Card className=''>
 					<CardHeader color='primaryCardHeader' className=''>
 						<h4 className={classes.cardTitleWhite}>Standings</h4>
-						<p className={classes.cardCategoryWhite}>Week 3</p>
+						<p className={classes.cardCategoryWhite}>{season[0].season}</p>
 					</CardHeader>
 					<CardBody className=''>
 						<CustomTable
@@ -195,7 +209,7 @@ const dashboard = () => {
 				<Card className=''>
 					<CardHeader color='roseCardHeader' className=''>
 						<h4 className={classes.cardTitleWhite}>Top Scorer</h4>
-						<p className={classes.cardCategoryWhite}>Week 3</p>
+						<p className={classes.cardCategoryWhite}>{season[0].season}</p>
 					</CardHeader>
 					<CardBody className=''>
 						<CustomTable

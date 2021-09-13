@@ -37,7 +37,7 @@ const Fixtures = () => {
 			<Grid xs={12} sm={12} md={12}>
 				<FixtureTabs
 					title=''
-					headerColor='primaryCardHeader'
+					headerColor='successCardHeader'
 					selectedIndex={currentMonthIndex}
 					tabs={fixtureMonths}
 				/>
