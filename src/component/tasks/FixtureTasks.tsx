@@ -62,19 +62,29 @@ const FixtureTasks: React.FC<Props> = ({ eventStartTime, eventEndTime }) => {
 	}
 
 	// Selectors
+	const { selectedLeague } = useSelector(
+		(state: AppState) => state.selectedLeague
+	)
+	const season = useSelector(
+		(state: AppState) => state.firestore.ordered.seasons
+	)
 	const fixtures = useSelector(
 		(state: AppState) => state.firestore.ordered.fixtures
 	)
+	let leagueId = '#'
+	if (isLoaded(season)) {
+		leagueId = season[0].id.toString()
+	}
 
 	// Firestore Hooks
 	useFirestoreConnect([
 		{
 			collection: '/football',
-			doc: 'premierleague',
+			doc: selectedLeague,
 			subcollections: [
 				{
 					collection: '/leagues',
-					doc: 'leagueId_2790',
+					doc: leagueId,
 					subcollections: [
 						{
 							collection: 'fixtures',

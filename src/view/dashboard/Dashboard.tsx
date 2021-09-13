@@ -71,10 +71,6 @@ const dashboard = () => {
 		(state: AppState) => state.selectedLeague
 	)
 
-	// const league = useSelector(
-	// 	(state: AppState) => state.firestore.ordered.league
-	// )
-
 	const season = useSelector(
 		(state: AppState) => state.firestore.ordered.seasons
 	)
