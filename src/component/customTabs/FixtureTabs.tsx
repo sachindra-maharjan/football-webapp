@@ -77,14 +77,6 @@ const FixtureTabs: React.FC<Props> = props => {
 		},
 	])
 
-	// Monthly Fixtures
-	// Array.from(timestampMap.entries()).forEach(entry => {
-	// 	console.log(`key: ${entry[0]} values: ${entry[1].length}`)
-	// 	entry[1].forEach(v => {
-	// 		console.log(`----- ${v.homeTeam.teamName} v ${v.awayTeam.teamName}`)
-	// 	})
-	// })
-
 	if (!isLoaded(fixtures)) {
 		return <div>Loading...</div>
 	}

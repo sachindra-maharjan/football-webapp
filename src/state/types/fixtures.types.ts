@@ -5,7 +5,7 @@ export interface Fixture {
 	eventTimestamp: number
 	venue: string
 	status: string
-	shortStatus: string
+	statusShort: string
 	referee: string
 	round: string
 	goalsHomeTeam: number
@@ -14,6 +14,7 @@ export interface Fixture {
 	awayTeam: Team
 	firstHalfStart: number
 	secondHalfStart: number
+	elapsed: number
 	Score: Score
 }
 

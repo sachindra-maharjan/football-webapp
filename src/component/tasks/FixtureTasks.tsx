@@ -35,10 +35,24 @@ const FixtureTasks: React.FC<Props> = ({ fixtures }) => {
 
 	const getDateString = (time: number): string => {
 		const date = new Date(time)
-		return `${date.toLocaleDateString('en-us', { weekday: 'long' })}, 
-			${date.getDay() + 1} ${date.toLocaleDateString('en-us', {
-			month: 'long',
-		})} ${date.getFullYear()}`
+		return date.toDateString()
+		// return `${date.toLocaleDateString('en-us', { weekday: 'long' })},
+		// 	${date.getDay() + 1} ${date.toLocaleDateString('en-us', {
+		// 	month: 'long',
+		// })} ${date.getFullYear()}`
+	}
+
+	const getScore = (fixture: Fixture): string => {
+		if (fixture.elapsed && fixture.elapsed > 0) {
+			return `${fixture.goalsHomeTeam ? fixture.goalsHomeTeam : 0} - ${
+				fixture.goalsAwayTeam ? fixture.goalsAwayTeam : 0
+			}`
+		}
+
+		const date = new Date(fixture.eventTimestamp * 1000)
+		return `${date.getUTCHours()}:${
+			date.getUTCMinutes() === 0 ? '00' : date.getUTCMinutes()
+		}`
 	}
 
 	useEffect(() => {
@@ -62,39 +76,43 @@ const FixtureTasks: React.FC<Props> = ({ fixtures }) => {
 	if (fixtureMap === undefined) {
 		return <div>Loading...</div>
 	}
-	if (Array.from(fixtureMap.entries()).length === 0) {
+	if (fixtureMap && Array.from(fixtureMap.entries()).length === 0) {
 		return <div>Fixtures not available.</div>
 	}
 
 	return (
 		<Table className={classes.table}>
 			<TableBody>
-				{Array.from(fixtureMap.entries()).map(entry => (
-					<Table>
-						<TableHead>
-							<TableRow className={classes.tableRow}>
-								<TableCell width='39%' />
-								<TableCell className={classes.tableCellTitle}>
-									{entry[0]}
-								</TableCell>
-								<TableCell width='39%' />
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{entry[1].map(v => (
-								<TableRow key={v.fixtureId} className={classes.tableRow}>
-									<TableCell className={tableCellClassesRight}>
-										{v.homeTeam.teamName}
+				{fixtureMap &&
+					Array.from(fixtureMap.entries()).map(entry => (
+						<Table>
+							<TableHead>
+								<TableRow className={classes.tableRow}>
+									<TableCell width='39%' />
+									<TableCell className={classes.tableCellTitle}>
+										{entry[0]}
 									</TableCell>
-									<TableCell className={tableCellCenterClasses}>Vs</TableCell>
-									<TableCell className={tableCellClasses}>
-										{v.awayTeam.teamName}
-									</TableCell>
+									<TableCell width='39%' />
 								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				))}
+							</TableHead>
+							<TableBody>
+								{entry[1].map(v => (
+									<TableRow key={v.fixtureId} className={classes.tableRow}>
+										<TableCell className={tableCellClassesRight}>
+											{v.homeTeam.teamName}
+										</TableCell>
+										<TableCell className={tableCellCenterClasses}>
+											<div className={classes.score}>{getScore(v)}</div>
+											<div>{v.statusShort ? v.statusShort : ''}</div>
+										</TableCell>
+										<TableCell className={tableCellClasses}>
+											{v.awayTeam.teamName}
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					))}
 			</TableBody>
 		</Table>
 	)

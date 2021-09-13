@@ -94,6 +94,9 @@ const tasksStyle = createStyles({
 		padding: '5px',
 		textAlign: 'center',
 	},
+	score: {
+		marginBottom: '2px',
+	},
 })
 
 export default tasksStyle
