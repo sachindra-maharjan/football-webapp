@@ -1,7 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
-import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Tab, Tabs } from '@material-ui/core'
@@ -9,10 +7,7 @@ import styles from './CustomTabs.styles'
 import Card from '../card/Card'
 import CardHeader, { CardHeaderColor } from '../card/CardHeader'
 import CardBody from '../card/CardBody'
-
-import { AppState } from '../../state/reducer'
 import FixtureTasks from '../tasks/FixtureTasks'
-import convertToObj from '../../firebase/convert'
 
 interface Props {
 	headerColor: CardHeaderColor
@@ -33,13 +28,9 @@ const FixtureTabs: React.FC<Props> = props => {
 	const { headerColor, plainTabs, tabs, title, selectedIndex } = props
 
 	const [value, setValue] = React.useState(selectedIndex)
-	const [eventStartMonth, setEventStartMonth] = React.useState(0)
-	const [eventEndMonth, setEventEndMonth] = React.useState(0)
 
 	const handleChange = (event: any, val: number) => {
 		setValue(val)
-		setEventStartMonth(tabs[val].startTimestamp)
-		setEventEndMonth(tabs[val].endTimestamp)
 	}
 
 	const classes = useStyle()
@@ -47,39 +38,6 @@ const FixtureTabs: React.FC<Props> = props => {
 	const cardTitle = classNames({
 		[classes.cardTitle]: true,
 	})
-
-	// Selectors
-	const fixtures = useSelector(
-		(state: AppState) => state.firestore.ordered.fixtures
-	)
-
-	// Firestore Hooks
-	useFirestoreConnect([
-		{
-			collection: '/football',
-			doc: 'premierleague',
-			subcollections: [
-				{
-					collection: '/leagues',
-					doc: 'leagueId_2790',
-					subcollections: [
-						{
-							collection: 'fixtures',
-							where: [
-								['eventTimestamp', '>=', eventStartMonth],
-								['eventTimestamp', '<=', eventEndMonth],
-							],
-						},
-					],
-				},
-			],
-			storeAs: 'fixtures',
-		},
-	])
-
-	if (!isLoaded(fixtures)) {
-		return <div>Loading...</div>
-	}
 
 	return (
 		<Card className=''>
@@ -124,7 +82,10 @@ const FixtureTabs: React.FC<Props> = props => {
 						return (
 							// eslint-disable-next-line react/no-array-index-key
 							<div key={key}>
-								<FixtureTasks fixtures={convertToObj(fixtures)} />
+								<FixtureTasks
+									eventStartTime={prop.startTimestamp}
+									eventEndTime={prop.endTimestamp}
+								/>
 							</div>
 						)
 					}

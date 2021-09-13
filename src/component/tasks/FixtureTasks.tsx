@@ -9,18 +9,22 @@ import {
 	TableRow,
 } from '@material-ui/core'
 import classNames from 'classnames'
-import { isLoaded } from 'react-redux-firebase'
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
+import { useSelector } from 'react-redux'
 import styles from './Tasks.styles'
 import { Fixture } from '../../state/types/fixtures.types'
 import convertToObj from '../../firebase/convert'
+import { AppState } from '../../state/reducer'
 
 interface Props {
-	fixtures: Fixture[]
+	// fixtures?: Fixture[]
+	eventStartTime: number
+	eventEndTime: number
 }
 
 const useStyle = makeStyles(styles)
 
-const FixtureTasks: React.FC<Props> = ({ fixtures }) => {
+const FixtureTasks: React.FC<Props> = ({ eventStartTime, eventEndTime }) => {
 	const [fixtureMap, setFixtureMap] = useState<Map<string, Fixture[]>>()
 	const classes = useStyle()
 	const tableCellClasses = classNames(classes.tableCell)
@@ -54,6 +58,35 @@ const FixtureTasks: React.FC<Props> = ({ fixtures }) => {
 			date.getUTCMinutes() === 0 ? '00' : date.getUTCMinutes()
 		}`
 	}
+
+	// Selectors
+	const fixtures = useSelector(
+		(state: AppState) => state.firestore.ordered.fixtures
+	)
+
+	// Firestore Hooks
+	useFirestoreConnect([
+		{
+			collection: '/football',
+			doc: 'premierleague',
+			subcollections: [
+				{
+					collection: '/leagues',
+					doc: 'leagueId_2790',
+					subcollections: [
+						{
+							collection: 'fixtures',
+							where: [
+								['eventTimestamp', '>=', eventStartTime],
+								['eventTimestamp', '<=', eventEndTime],
+							],
+						},
+					],
+				},
+			],
+			storeAs: 'fixtures',
+		},
+	])
 
 	useEffect(() => {
 		if (isLoaded(fixtures)) {
@@ -120,7 +153,9 @@ const FixtureTasks: React.FC<Props> = ({ fixtures }) => {
 
 FixtureTasks.propTypes = {
 	// eslint-disable-next-line react/forbid-prop-types
-	fixtures: PropTypes.any.isRequired,
+	// fixtures: PropTypes.any.isRequired,
+	eventStartTime: PropTypes.number.isRequired,
+	eventEndTime: PropTypes.number.isRequired,
 }
 
 export default FixtureTasks
