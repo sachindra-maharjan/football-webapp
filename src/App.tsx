@@ -71,7 +71,7 @@ const App = () => {
 
 	useFirestoreConnect([
 		{
-			collection: '/football-leagues',
+			collection: '/football',
 			doc: currentLeague,
 			storeAs: 'league',
 		},
@@ -80,7 +80,7 @@ const App = () => {
 	// Get Default Current Season
 	useFirestoreConnect([
 		{
-			collection: '/football-leagues',
+			collection: '/football',
 			doc: currentLeague,
 			subcollections: [
 				{

@@ -10,6 +10,7 @@ import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import Table from '../../component/table/Table'
 import convertToObj from '../../firebase/convert'
+import { getNumber, getString } from '../../hooks/useValues'
 import { AppState } from '../../state/reducer'
 import { StandingStat } from '../../state/types/standings.types'
 
@@ -121,17 +122,17 @@ const Standings: React.FC<Props> = () => {
 			teamStandings.forEach(t => {
 				const all = convertToObj<StandingStat>(t.all)
 				const team: string[] = [
-					t.rank.toString(),
-					t.teamName.toString(),
-					all.matchesPlayed.toString(),
-					(all.win * 3 + all.draw).toString(),
-					all.win.toString(),
-					all.draw.toString(),
-					all.lose.toString(),
-					all.goalsFor.toString(),
-					all.goalsAgainst.toString(),
-					(all.goalsFor - all.goalsAgainst).toString(),
-					t.forme.toString(),
+					getString(t.rank.toString()),
+					getString(t.teamName.toString()),
+					getNumber(all.matchesPlayed).toString(),
+					(getNumber(all.win) * 3 + getNumber(all.draw)).toString(),
+					getNumber(all.win).toString(),
+					getNumber(all.draw).toString(),
+					getNumber(all.lose).toString(),
+					getNumber(all.goalsFor).toString(),
+					getNumber(all.goalsAgainst).toString(),
+					(getNumber(all.goalsFor) - getNumber(all.goalsAgainst)).toString(),
+					getString(t.forme.toString()),
 				]
 				allTeams.push(team)
 			})

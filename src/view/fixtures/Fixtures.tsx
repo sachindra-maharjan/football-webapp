@@ -5,7 +5,7 @@ import GridContainer from '../../component/grid/GridContainer'
 
 const currentDate = new Date()
 const currentMonthIndex = currentDate.getMonth() - 7
-currentDate.setFullYear(currentDate.getFullYear() - 1)
+currentDate.setFullYear(currentDate.getFullYear())
 currentDate.setMonth(7)
 
 const fixtureMonths: {

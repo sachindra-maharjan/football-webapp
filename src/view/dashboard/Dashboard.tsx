@@ -10,6 +10,7 @@ import GridContainer from '../../component/grid/GridContainer'
 import GridItem from '../../component/grid/GridItem'
 import CustomTable from '../../component/table/Table'
 import convertToObj from '../../firebase/convert'
+import { getNumber, getString } from '../../hooks/useValues'
 import { AppState } from '../../state/reducer'
 import { Games, Goals } from '../../state/types/player.types'
 import { StandingStat } from '../../state/types/standings.types'
@@ -29,7 +30,7 @@ const getDaysInMonth = (year: number, month: number): number => {
 }
 
 const currentDate = new Date()
-currentDate.setFullYear(currentDate.getFullYear() - 1)
+currentDate.setFullYear(currentDate.getFullYear())
 
 const totalDays = getDaysInMonth(
 	currentDate.getFullYear(),
@@ -130,13 +131,13 @@ const dashboard = () => {
 			teamStandings.forEach(t => {
 				const all = convertToObj<StandingStat>(t.all)
 				const team: string[] = [
-					`${t.rank}`,
-					`${t.teamName}`,
-					`${all.matchesPlayed}`,
-					`${all.win * 3 + all.draw}`,
-					`${all.win}`,
-					`${all.draw}`,
-					`${all.lose}`,
+					getString(t.rank.toString()),
+					getString(t.teamName.toString()),
+					getNumber(all.matchesPlayed).toString(),
+					(getNumber(all.win) * 3 + getNumber(all.draw)).toString(),
+					getNumber(all.win).toString(),
+					getNumber(all.draw).toString(),
+					getNumber(all.lose).toString(),
 				]
 				allTeams.push(team)
 			})
@@ -182,7 +183,9 @@ const dashboard = () => {
 				<Card className=''>
 					<CardHeader color='primaryCardHeader' className=''>
 						<h4 className={classes.cardTitleWhite}>Standings</h4>
-						<p className={classes.cardCategoryWhite}>{season[0].season}</p>
+						<p className={classes.cardCategoryWhite}>
+							{season && season[0].season}
+						</p>
 					</CardHeader>
 					<CardBody className=''>
 						<CustomTable
@@ -205,7 +208,9 @@ const dashboard = () => {
 				<Card className=''>
 					<CardHeader color='roseCardHeader' className=''>
 						<h4 className={classes.cardTitleWhite}>Top Scorer</h4>
-						<p className={classes.cardCategoryWhite}>{season[0].season}</p>
+						<p className={classes.cardCategoryWhite}>
+							{season && season[0].season}
+						</p>
 					</CardHeader>
 					<CardBody className=''>
 						<CustomTable
